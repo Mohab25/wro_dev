@@ -1,0 +1,289 @@
+scheming_version: 2
+dataset_type: metadata-form
+#about_url: http://example.com/the-camel-photos-schema
+
+
+dataset_fields:
+
+- field_name: email
+  label: Email
+  help_text: input your emial address
+  required: true
+  form_placeholder: Your email address
+
+- field_name: owner_org
+  label: Institution
+  help_text: input your institution
+  required: true
+  form_placeholder: Your institution
+  #preset: emc_dataset_organization
+  # the field name owner_org is required by ckanex-scheming
+
+- field_name: contact_person
+  label: Contact person
+  help_text: who represents your contact
+  required: true
+  form_placeholder: Your Contact
+
+- field_name: title
+  label: Dataset title
+  help_text: Name by which the cited resource is known - This is a SANS 1878 mandatory field
+#  preset: title
+  required: true
+  form_placeholder: eg. A descriptive title
+
+- field_name: name
+  label: URL
+  preset: dataset_slug
+  form_placeholder: eg. camel-no-5
+
+- field_name: description
+  label: Description
+  help_text: Short description of dataset
+  required: true
+  form_placeholder: Description
+
+- field_name: wrc_project_number
+  label: Project Number
+  help_text: input WRC Project Number
+  required: false
+  form_placeholder: Project#
+
+- field_name: creator
+  label: Creators
+  help_text: specify the creator of this dataset
+  required: true
+  form_placeholder: e.g Dave bings
+
+- field_name: publisher
+  label: Publisher
+  help_text: specify the publisher of this dataset, e.g. Agricultural Research Council (ARC), Council for Scientific and Industrial Research (CSIR)
+  required: true
+  form_placeholder: Publisher
+
+- field_name: publication_year
+  label: Publication Year
+  help_text: specify the publication year for this dataset, e.g 2021, 2022 or 2015-2020
+  required: true
+  form_placeholder: Publisher
+
+- field_name: resource_type
+  label: Resource Type
+  help_text: specify the resource type
+  required: true
+  preset: select
+  choices:
+  - value: dataset
+    label: Dataset
+  - value: text
+    label: Text
+  - value: image
+    label: Image
+
+- field_name: location
+  label: Location/GPS Coordinates
+  help_text: Expressed as point coordinates or lower-left upper-right bounding box coordinates, e.g. 16.48, -34.97; 32.86, -22.03 for all of South Africa 
+  required: false
+  form_placeholder: e.g 16.48, -34.97; 32.86, -22.03
+
+- field_name: spatial
+  label: Geographic location bounding box
+  required: false
+  help_text: >-
+    Bounding box for the dataset, expressed as the geographic coordinates of the upper left and lower right
+    corners - This is a SANS 1878 mandatory field
+  preset: emc_dataset_spatial_extent
+  form_display: map.html
+
+- field_name: metadata_available
+  label: Metadata available
+  required: true
+  choices:
+  - value: "yes"
+    label: "yes"
+  - value: "no"
+    label: "no"
+  preset: select
+  
+- field_name: metadata_scheme
+  label: Metadata scheme
+  help_text: choose a metadata scheme 
+  required: false
+  preset: select
+  choices:
+  - value: iso 19115/sans 1878
+    label: ISO 19115/SANS 1878
+  - value: dublin core
+    label: Dublin Core
+  - value: data document initiative(ddi)
+    label: Data Document Initiative(DDI)
+  - value: ecological metadata language(eml)
+    label: Ecological Metadata Language(EML)
+  - value: darwin core
+    label: Darwin Core
+  - value: internal lookup tables
+    label: Internal Lookup Tables(please upload with dataset)
+  - value: other
+    label: Other
+
+- field_name: keywords
+  label: Keywords
+  help_text: five or more keywords separated by a comma
+  required: true
+  form_placeholder: input keywords,
+
+- field_name: data_format
+  label: Data format
+  required: false
+  form_placeholder: e.g API, JSON, XML, CSV, web scraping
+
+- field_name: doi
+  label: DOI
+  required: false
+  form_placeholder: input DOI
+  help_text: as part of Phase 1 the WRO does not provide DOIs, please use a platform such as SAEON or Dataverse if a DOI is required and upload the metadata and citation here
+
+- field_name: data_availability
+  label: Data availablility
+  required: true
+  preset: select
+  choices:
+  - value: internal data
+    label: Shared Internal Data| Accessible to the custodian and the WRO platform managers and software engineers.
+  - value: community data
+    label: Shared Community Data| Accessible to the custodian, the WRO(internal) and selected other partners using the WRO.
+  - value: public data
+    label: Publically available data.
+ 
+- field_name: wro_theme
+  label: WRO Theme (where data should be stored) 
+  required: true
+  preset: select
+  choices:
+  - value: agriculture
+    label: Agriculture
+  - value: biodiversity
+    label: Biodiversity
+  - value: citizen_science
+    label: Citizen Science
+  - value: dam_level
+    label: Dam level
+  - value: drought
+    label: Drought
+  - value: economics
+    label: Economics
+  - value: ecosystems
+    label: Ecosystems
+  - value: estuaries
+    label: Estuaries
+  - value: food_security
+    label: Food security
+  - value: groundwater
+    label: Groundwater
+  - value: hydrological_data_and_modelling
+    label: Hydrological data and modelling
+  - value: legislation
+    label: Legislation
+  - value: marine_water
+    label: Marine water
+  - value: mine_water
+    label: Mine water
+  - value: social
+    label: Social
+  - value: streamflow
+    label: Streamflow
+  - value: transboundary_water
+    label: Transboundary water
+  - value: water_quality
+    label: Water quality
+  - value: water_scarcity
+    label: Water scarcity
+  - value: weather_and_climate_data
+    label: Weather and climate data
+  - value: wetlands
+    label: Wetlands
+
+- field_name: data_structure_category
+  label: Data structure category 
+  required: true
+  preset: select
+  choices:
+  - value: structured
+    label: Structured (Clearly labelled and in a standarised format e.g Ms Excel tables, csv files)
+  - value: semi-structured
+    label: Semi-structured (Does not fully conforms to the tabular format of structured data but may contain tags and markers identifying properties to arrange
+  - value: unstructured
+    label: Unstructured (Cannot be stored in relational databases and is often stored in its raw format, such as photographs of rivers and social media posts)
+
+
+- field_name: zone
+  label: Zone
+  required: true
+  help_text: Best estimated by data uploader based on extent or pre-processing
+  preset: select
+  choices:
+  - value: raw
+    label: Raw
+  - value: refined
+    label: Refined
+  - value: processing
+    label: Processing
+  - value: access
+    label: Access
+
+- field_name: upload_requirements
+  label: Upload requirements
+  required: true
+  preset: select
+  choices:
+  - value: static
+    label: Static (once-off)
+  - value: time_series_weekly
+    label: Time series (weekly)
+  - value: time_series_monthly
+    label: Time series (mothly)
+  - value: time_series_annually
+    label: Time series (annualy)
+
+- field_name: url_for_regular_upload
+  label: URL for regular upload
+  required: false
+  form_placeholder: http://
+
+- field_name: data_collection_name
+  label: Data Collection name
+  required: false
+  help_text: Determines the name of the folder where files will be kept e.g. WRC 00140-2020-2021 North West province soil salinity project
+
+- field_name: agreement
+  label: I agree to the Data Management Plan and Term and Conditions of the WRO
+  required: true
+  validators: boolean_validator
+  preset: emc_checkbox
+
+
+resource_fields:
+
+  - field_name: url
+    label: URL
+    preset: resource_url_upload
+
+  - field_name: name
+    label: Name
+    form_placeholder: eg. January 2011 Gold Prices
+
+  - field_name: description
+    label: Description
+    form_snippet: markdown.html
+    form_placeholder: Some useful notes about the data
+
+  - field_name: format
+    label: Format
+    required: true
+    preset: resource_format_autocomplete
+    help_text: Name of the data transfer format - This is a SANS 1878 mandatory field
+
+  - field_name: format_version
+    label: Format Version
+    required: true
+    help_text: Version of the data transfer format (date, number, etc) - This is a SANS 1878 mandatory field
