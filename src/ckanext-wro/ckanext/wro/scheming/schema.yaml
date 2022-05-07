@@ -17,10 +17,11 @@ dataset_fields:
   required: true
   form_placeholder: eg. A descriptive title
 
-# - field_name: name
-#   label: URL
-#   preset: dataset_slug
-#   form_placeholder: eg. camel-no-5
+- field_name: url
+  label: Dateset URL
+  form_placeholder: http://example.com/dataset.json
+  #display_property: foaf:homepage
+  display_snippet: link.html
 
 # - field_name: owner_org
 #   label: Institution
@@ -29,8 +30,6 @@ dataset_fields:
 #   form_placeholder: Your institution
   #preset: emc_dataset_organization
   # the field name owner_org is required by ckanex-scheming
-
-
 
 - field_name: authors
   label: Authors
@@ -76,11 +75,6 @@ dataset_fields:
 #   - field_name: country
 #     label: Country
 
-# - field_name: creators
-#   label: Creators
-#   help_text: specify the creator of this dataset
-#   required: true
-#   form_placeholder: e.g Dave bings
 
 - field_name: description
   label: Description
@@ -145,19 +139,19 @@ dataset_fields:
     corners - This is a SANS 1878 mandatory field
   preset: emc_dataset_spatial_extent
   form_display: map.html
-  display_snippet: null
+  #display_snippet: null
 
-- field_name: data_reference_data_from
-  label: Data reference data (from)
-  help_text: specify the date
-  required: true
-  preset: date
-
-- field_name: data_reference_data_to
-  label: Data reference data (to)
-  help_text: specify the date
-  required: true
-  preset: date
+- field_name: data_reference_date
+  label: Data Reference Date
+  repeating_subfields:
+      - field_name: data_reference_date_from
+        label: Data Reference Date (from)
+        required: true
+        preset: date
+      - field_name: data_reference_date_from
+        required: true
+        label: Data Reference Date (to)
+        preset: date
 
 - field_name: dataset_topic_category
   label: Dataset Topic Category 
@@ -221,7 +215,7 @@ dataset_fields:
 
 - field_name: uploader_estimation_of_extent
   label: Uploader estimation of extent to which data have been processed
-  required: false
+  required: true
   preset: select
   choices:
   - value: raw
@@ -265,6 +259,7 @@ dataset_fields:
   label: Supplementary information
   help_text: for mohab, this should be a file field
   required: flase
+  preset: resource_url_upload
   form_placeholder:
 
 - field_name: agreement
