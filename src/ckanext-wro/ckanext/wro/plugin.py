@@ -1,6 +1,7 @@
 import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
 from .logic.action import create
+from ckan.common import config
 from . import helpers
 
 class WroPlugin(plugins.SingletonPlugin):
@@ -51,4 +52,5 @@ class WroPlugin(plugins.SingletonPlugin):
         return {
             "emc_default_bounding_box": helpers.get_default_bounding_box,
             "emc_convert_geojson_to_bounding_box": helpers.convert_geojson_to_bbox,
+            "default_map_extent":helpers.get_parsed_geojson,
         }
