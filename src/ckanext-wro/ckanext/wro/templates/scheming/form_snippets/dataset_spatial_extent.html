@@ -1,6 +1,3 @@
-{ # all of this is commented out 
-
-
 {% import "macros/form.html"  as form %}
 
 {% asset "template_change_assets/dataset-spatial-extent-map-js" %}
@@ -32,11 +29,9 @@
     >
         <div id="dataset-spatial-extent-map-container"></div>
         <div id="dataset-spatial-extent-map-attribution">
-            {% snippet "spatial/snippets/map_attribution.html", map_config=map_config %}
+            {#% snippet "spatial/snippets/map_attribution.html", map_config=map_config %#}
         </div>
+        {{ default_bounding_box }}
     </div>
     {%- snippet 'scheming/form_snippets/help_text.html', field=field -%}
 {% endcall %}
-
-
-#}

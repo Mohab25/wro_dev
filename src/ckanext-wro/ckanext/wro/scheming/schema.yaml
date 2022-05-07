@@ -145,6 +145,7 @@ dataset_fields:
     corners - This is a SANS 1878 mandatory field
   preset: emc_dataset_spatial_extent
   form_display: map.html
+  display_snippet: null
 
 - field_name: data_reference_data_from
   label: Data reference data (from)
