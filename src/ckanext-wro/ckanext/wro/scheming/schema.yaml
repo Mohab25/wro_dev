@@ -13,7 +13,7 @@ dataset_fields:
 - field_name: title
   label: Dataset title
   help_text: Name by which the cited resource is known - This is a SANS 1878 mandatory field
-#  preset: title
+#  preset: title (used if you want to make the input larger)
   required: true
   form_placeholder: eg. A descriptive title
 
@@ -22,22 +22,35 @@ dataset_fields:
 #   preset: dataset_slug
 #   form_placeholder: eg. camel-no-5
 
-- field_name: owner_org
-  label: Institution
-  help_text: input your institution
-  required: true
-  form_placeholder: Your institution
+# - field_name: owner_org
+#   label: Institution
+#   help_text: input your institution
+#   required: true
+#   form_placeholder: Your institution
   #preset: emc_dataset_organization
   # the field name owner_org is required by ckanex-scheming
 
-- field_name: creators
-  label: Creators
-  help_text: specify the creator of this dataset
-  required: true
-  form_placeholder: e.g Dave bings
+
+
+- field_name: authors
+  label: Authors
+  repeating_label: Author
+  repeating_subfields:
+    - field_name: author_name
+      label: Author Name
+      required: true
+    - field_name: author_surname
+      label: Author Surname
+    - field_name: Institution
+      label: Institution
+      required: true
+
+    # preset: multiple_text
+    # form_blanks: 1
+    # required: true
 
 - field_name: contact_same_as_creator
-  label: did the contact person created the dataset?
+  label: is the contact person for this dataset is the author(s)
   required: false
   validators: boolean_validator
   preset: emc_checkbox
@@ -47,6 +60,27 @@ dataset_fields:
   help_text: who represents your contact
   required: true
   form_placeholder: Your Contact
+
+# - field_name: contact_address
+#   label: Contact Address
+#   repeating_subfields:
+#   - field_name: address
+#     label: Address
+#     required: true
+#   - field_name: city
+#     label: City
+#   - field_name: state
+#     label: State
+#   - field_name: postal_code
+#     label: Postal Code
+#   - field_name: country
+#     label: Country
+
+# - field_name: creators
+#   label: Creators
+#   help_text: specify the creator of this dataset
+#   required: true
+#   form_placeholder: e.g Dave bings
 
 - field_name: description
   label: Description

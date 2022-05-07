@@ -5,10 +5,12 @@ from . import helpers
 
 class WroPlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IConfigurer)
-    plugins.implements(plugins.IActions)
+    plugins.implements(plugins.IActions) 
     plugins.implements(plugins.IActions)
     plugins.implements(plugins.ITemplateHelpers)
     plugins.implements(plugins.IResourceController, inherit=True) # temp testing 
+    #IDatasetForm can be added
+    
     # IConfigurer
 
     def update_config(self, config_):
