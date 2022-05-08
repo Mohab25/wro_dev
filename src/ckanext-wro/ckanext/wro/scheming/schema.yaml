@@ -287,10 +287,12 @@ resource_fields:
     preset: resource_format_autocomplete
     help_text: Name of the data transfer format - This is a SANS 1878 mandatory field
 
-  - field_name: format_version
-    label: Format Version
-    required: true
-    help_text: Version of the data transfer format (date, number, etc) - This is a SANS 1878 mandatory field
+  - field_name: is_data_supplementary
+    label: Is Data Supplementary?
+    required: false
+    validators: boolean_validator
+    preset: emc_checkbox
+    help_text: will be considered primary data assets if not specified
 
 
 
