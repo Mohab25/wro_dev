@@ -13,14 +13,15 @@ dataset_fields:
 - field_name: title
   label: Dataset title
   help_text: Name by which the cited resource is known - This is a SANS 1878 mandatory field
-#  preset: title (used if you want to make the input larger)
+  preset: title
   required: true
   form_placeholder: eg. A descriptive title
-
+  form_snippet: title.html
+  
 - field_name: url
   label: Dateset URL
   form_placeholder: http://example.com/dataset.json
-  #display_property: foaf:homepage
+  preset: dataset_slug
   display_snippet: link.html
 
 # - field_name: owner_org
@@ -253,14 +254,18 @@ dataset_fields:
   label: Minimum Maximum Extent
   help_text: specify the minima and maxima
   required: false
-  #preset: double texts
+  repeating_subfields:
+    - value: maximum_vertical_extent
+      label: Maximum Vertical Extent
+    - value: minimum_vertical_extent
+      label: Minimum Vertical Extent
 
-- field_name: supplementary_information
-  label: Supplementary information
-  help_text: for mohab, this should be a file field
-  required: flase
-  preset: resource_url_upload
-  form_placeholder:
+# - field_name: supplementary_information
+#   label: Supplementary information
+#   help_text: for mohab, this should be a file field
+#   required: flase
+#   preset: organization_url_upload
+#   form_placeholder:
 
 - field_name: agreement
   label: I agree to the Data Management Plan and Term and Conditions of the WRO
