@@ -50,7 +50,5 @@ class WroPlugin(plugins.SingletonPlugin):
     # IHelpers
     def get_helpers(self):
         return {
-            "emc_default_bounding_box": helpers.get_default_bounding_box,
-            "emc_convert_geojson_to_bounding_box": helpers.convert_geojson_to_bbox,
             "default_map_extent":helpers.get_parsed_geojson,
         }

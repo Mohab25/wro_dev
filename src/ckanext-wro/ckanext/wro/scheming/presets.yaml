@@ -17,17 +17,17 @@ presets:
   #       data-module-source: "/api/3/action/tag_autocomplete?query=?"
   #       class: ""
 
-  # - preset_name: emc_dataset_organization
-  #   values:
-  #     validators: >-
-  #       owner_org_validator
-  #       unicode
-  #     form_snippet: "organization_with_visibility.html"
-
-  - preset_name: emc_dataset_spatial_extent
+  - preset_name: emc_dataset_organization
     values:
-      form_snippet: "dataset_spatial_extent.html"
-      validators: emc_bbox_converter
+      validators: >-
+        owner_org_validator
+        unicode
+      form_snippet: "organization_with_visibility.html"
+
+  # - preset_name: emc_dataset_spatial_extent
+  #   values:
+  #     form_snippet: "dataset_spatial_extent.html"
+  #     validators: emc_bbox_converter
 
   - preset_name: emc_checkbox
     values:

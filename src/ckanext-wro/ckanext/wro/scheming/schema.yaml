@@ -17,7 +17,7 @@ dataset_fields:
   form_placeholder: eg. A descriptive title
   form_snippet: title.html
 
-- field_name: metadata_url
+- field_name: name
   label: Dateset Metadata URL
   form_placeholder: http://example.com/dataset.json
   preset: dataset_slug
@@ -32,13 +32,15 @@ dataset_fields:
       required: true
     - field_name: author_surname
       label: Author Surname
-    - field_name: email
+    - field_name: author_email
       label: Email
       required: false
-    - field_name: institution
-      label: Institution
+    - field_name: owner_org
+      label: Organization
       required: true
-    - field_name: department
+      preset: dataset_organization
+      validators: ignore_missing
+    - field_name: author_department
       label: Department
       required: false
     - field_name: contact_same_as_author
@@ -55,21 +57,33 @@ dataset_fields:
     - field_name: contact_name
       label: Contact name
       required: false
-    - field_name: email
+    - field_name: contact_email
       label: Email
       required: false
-    - field_name: institution
-      label: Institution
+    - field_name: contact_orgnization
+      label: Organization
       required: false
-    - field_name: department
+    - field_name: contact_department
       label: Department
       required: false
     
-- field_name: description
+- field_name: dataset_description
   label: Dataset Description
   help_text: Short description of dataset, e.g. 0-500 words
   required: true
   form_placeholder: Description
+  form_snippet: markdown.html
+
+- field_name: did_author_or_contact_organization_collect_the_data
+  label: Did the Author / Contact organization collect the data?
+  required: true
+  validators: boolean_validator
+  preset: emc_checkbox 
+
+- field_name: data_collection_organization
+  label: Name of organization collected the data
+  required: false
+
 
 - field_name: dataset_language
   label: Dataset Language
@@ -107,7 +121,7 @@ dataset_fields:
   - value: Ohter
     label: Other
 
-- field_name: license_url
+- field_name: dataset_license_url
   label: License URL
   help_text: specify the license url
   required: false
@@ -124,8 +138,8 @@ dataset_fields:
   help_allow_html: true
   required: false
   help_text: >-
-    <b>Leave defaults if data is not spatial</b>, Expressed as point coordinates or lower-left upper-right bounding box decimal coordinates, e.g. 16.48, -34.97; 32.86, -22.03 for all of South Africa.
-  preset: emc_dataset_spatial_extent
+    <b>Leave blank if data is not spatial</b>, Expressed as point coordinates or lower-left upper-right bounding box decimal coordinates, e.g. 16.48, -34.97; 32.86, -22.03 for all of South Africa.
+  #preset: emc_dataset_spatial_extent
   form_display: map.html
   #display_snippet: null
 
@@ -134,18 +148,17 @@ dataset_fields:
   required: true
   preset: simple_subfields
   help_text: specify the refernce dates
-  required: true
   repeating_subfields:
-      - field_name: data_reference_date_from
-        label: Data Reference Date (from)
+      - field_name: data_reference_date_to
+        label: Data Reference Date (to)
         required: true
         preset: date
       - field_name: data_reference_date_from
         required: true
-        label: Data Reference Date (to)
+        label: Data Reference Date (from)
         preset: date
 
-- field_name: dataset_topic_category
+- field_name: wro_theme
   label: Dataset Topic Category 
   required: true
   preset: select
@@ -229,7 +242,7 @@ dataset_fields:
   - value: static
     label: Static
 
-- field_name: alternate_identifier
+- field_name: alternative_identifier
   label: Alternate Identifier
   help_text: Any unique identifier for the metadata/dataset (e.g links to other identifiers, DOI, ISBN. Mandatory for replacement versions of the same data).
   required: false
@@ -238,7 +251,7 @@ dataset_fields:
 - field_name: vertical_extent_datum
   label: Vertical extent datum
   help_text: Unit of measure or reference point used to describe vertical extents (e.g. masl - metres above sea level, mbgl - metres below ground level)
-  required: flase
+  required: false
   form_placeholder:
 
 - field_name: minimum_maximum_extent
@@ -247,17 +260,10 @@ dataset_fields:
   preset: simple_subfields # customized by mohab(a lot to be added)
   required: false
   repeating_subfields:
-    - value: minimum_vertical_extent
+    - field_name: minimum_vertical_extent
       label: Minimum Vertical Extent
-    - value: maximum_vertical_extent
+    - field_name: maximum_vertical_extent
       label: Maximum Vertical Extent
-
-# - field_name: supplementary_information
-#   label: Supplementary information
-#   help_text: for mohab, this should be a file field
-#   required: flase
-#   preset: organization_url_upload
-#   form_placeholder:
 
 - field_name: agreement
   label: I agree to the Data Management Plan and Term and Conditions of the WRO
@@ -268,11 +274,11 @@ dataset_fields:
 
 resource_fields:
 
-  - field_name: url
+  - field_name: name
     label: URL
     preset: resource_url_upload
 
-  - field_name: name
+  - field_name: resource_name
     label: Name
     form_placeholder: eg. January 2011 Gold Prices
 
@@ -283,7 +289,7 @@ resource_fields:
 
   - field_name: format
     label: Format
-    required: true
+    required: false
     preset: resource_format_autocomplete
     help_text: Name of the data transfer format - This is a SANS 1878 mandatory field
 
@@ -365,6 +371,15 @@ resource_fields:
 #     label: Postal Code
 #   - field_name: country
 #     label: Country
+
+
+
+# - field_name: supplementary_information
+#   label: Supplementary information
+#   help_text: for mohab, this should be a file field
+#   required: flase
+#   preset: organization_url_upload
+#   form_placeholder:
 
 
 
@@ -450,3 +465,11 @@ resource_fields:
 #   required: false
 #   validators: boolean_validator
 #   preset: emc_checkbox
+
+# - field_name: owner_org
+#   label: Institution
+#   help_text: input your institution
+#   required: true
+#   form_placeholder: Your institution
+#   validators: ignore_missing
+#   preset: dataset_organization
