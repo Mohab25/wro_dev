@@ -17,8 +17,8 @@ dataset_fields:
   form_placeholder: eg. A descriptive title
   form_snippet: title.html
 
-- field_name: url
-  label: Dateset URL
+- field_name: metadata_url
+  label: Dateset Metadata URL
   form_placeholder: http://example.com/dataset.json
   preset: dataset_slug
   display_snippet: link.html
@@ -32,9 +32,15 @@ dataset_fields:
       required: true
     - field_name: author_surname
       label: Author Surname
-    - field_name: Institution
+    - field_name: email
+      label: Email
+      required: false
+    - field_name: institution
       label: Institution
       required: true
+    - field_name: department
+      label: Department
+      required: false
     - field_name: contact_same_as_author
       label: is this author a contact person for the dataset?
       required: true
@@ -45,8 +51,20 @@ dataset_fields:
   label: Contact person
   help_text: leave blank if it the same as the author
   required: false
-  form_placeholder: Your Contact
-
+  repeating_subfields:
+    - field_name: contact_name
+      label: Contact name
+      required: false
+    - field_name: email
+      label: Email
+      required: false
+    - field_name: institution
+      label: Institution
+      required: false
+    - field_name: department
+      label: Department
+      required: false
+    
 - field_name: description
   label: Dataset Description
   help_text: Short description of dataset, e.g. 0-500 words
@@ -55,7 +73,7 @@ dataset_fields:
 
 - field_name: dataset_language
   label: Dataset Language
-  help_text: Assumed English if not provided.
+  help_text: Assumed English if not provided
   required: false
   form_placeholder: Dataset language.
 
@@ -103,15 +121,17 @@ dataset_fields:
 
 - field_name: spatial
   label: Geographic location bounding box
+  help_allow_html: true
   required: false
   help_text: >-
-    Leave defaults if data is not spatial, Expressed as point coordinates or lower-left upper-right bounding box decimal coordinates, e.g. 16.48, -34.97; 32.86, -22.03 for all of South Africa.
+    <b>Leave defaults if data is not spatial</b>, Expressed as point coordinates or lower-left upper-right bounding box decimal coordinates, e.g. 16.48, -34.97; 32.86, -22.03 for all of South Africa.
   preset: emc_dataset_spatial_extent
   form_display: map.html
   #display_snippet: null
 
 - field_name: data_reference_date
   label: Data Reference Date
+  required: true
   preset: simple_subfields
   help_text: specify the refernce dates
   required: true
@@ -200,7 +220,7 @@ dataset_fields:
     label: Access
 
 - field_name: data_classification
-  label: is the Data
+  label: is the Data Time seriesed or static
   required: false
   preset: radio
   choices:
