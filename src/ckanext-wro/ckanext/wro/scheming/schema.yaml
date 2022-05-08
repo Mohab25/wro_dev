@@ -1,6 +1,6 @@
 scheming_version: 2
 dataset_type: metadata-form
-#about_url: http://example.com/the-camel-photos-schema
+#about_url: http://example.com/dataset
 
 dataset_fields:
 
@@ -23,14 +23,6 @@ dataset_fields:
   preset: dataset_slug
   display_snippet: link.html
 
-# - field_name: owner_org
-#   label: Institution
-#   help_text: input your institution
-#   required: true
-#   form_placeholder: Your institution
-  #preset: emc_dataset_organization
-  # the field name owner_org is required by ckanex-scheming
-
 - field_name: authors
   label: Authors
   repeating_label: Author
@@ -49,67 +41,40 @@ dataset_fields:
       validators: boolean_validator
       preset: emc_checkbox 
 
-    # preset: multiple_text
-    # form_blanks: 1
-    # required: true
-
-# - field_name: contact_same_as_creator
-#   label: is the contact person for this dataset is the author(s)
-#   required: false
-#   validators: boolean_validator
-#   preset: emc_checkbox
-
 - field_name: contact_person
   label: Contact person
   help_text: leave blank if it the same as the author
   required: false
   form_placeholder: Your Contact
 
-# - field_name: contact_address
-#   label: Contact Address
-#   repeating_subfields:
-#   - field_name: address
-#     label: Address
-#     required: true
-#   - field_name: city
-#     label: City
-#   - field_name: state
-#     label: State
-#   - field_name: postal_code
-#     label: Postal Code
-#   - field_name: country
-#     label: Country
-
-
 - field_name: description
-  label: Description
+  label: Dataset Description
   help_text: Short description of dataset, e.g. 0-500 words
   required: true
   form_placeholder: Description
 
-- field_name: wrc_project_number
-  label: Project Number
-  help_text: WRC Project or report number (if applicable)
-  required: false
-  form_placeholder: Project#
-
 - field_name: dataset_language
   label: Dataset Language
   help_text: Assumed English if not provided.
-  required: true
+  required: false
   form_placeholder: Dataset language.
 
 - field_name: publisher
   label: Publisher
-  help_text: specify the publisher of this dataset, e.g. Agricultural Research Council (ARC), Council for Scientific and Industrial Research (CSIR)
+  help_text: Institution that owns/publishes dataset {will become a drop-down list with all names of SA institutions}
   required: true
   form_placeholder: Publisher
 
 - field_name: publication_year
   label: Publication Year
-  help_text: specify the publication year for this dataset, e.g 2021, 2022 or 2015-2020
+  help_text: Year in which the digital object was published
   required: true
-  form_placeholder: Publisher
+  preset: date
+
+- field_name: wrc_project_number
+  label: Project Number
+  help_text: WRC Project or report number (if applicable)
+  required: false
 
 - field_name: license
   label: License
@@ -132,7 +97,7 @@ dataset_fields:
 
 - field_name: keywords
   label: Keywords
-  help_text: five or more keywords separated by a comma
+  help_text: Keywords are used to tag/describe the dataset for discoverability in data searches. (e.g temperature, salinity, maize)
   required: true
   form_placeholder: input keywords,
 
@@ -140,8 +105,7 @@ dataset_fields:
   label: Geographic location bounding box
   required: false
   help_text: >-
-    Bounding box for the dataset, expressed as the geographic coordinates of the upper left and lower right
-    corners - This is a SANS 1878 mandatory field
+    Leave defaults if data is not spatial, Expressed as point coordinates or lower-left upper-right bounding box decimal coordinates, e.g. 16.48, -34.97; 32.86, -22.03 for all of South Africa.
   preset: emc_dataset_spatial_extent
   form_display: map.html
   #display_snippet: null
@@ -211,20 +175,20 @@ dataset_fields:
 
 - field_name: data_structure_category
   label: Data structure category 
-  required: true
-  preset: select
+  required: false
+  preset: radio
   choices:
   - value: structured
-    label: Structured (Clearly labelled and in a standarised format e.g Ms Excel tables, csv files)
+    label: Structured (clearly labelled and in a standardised format)
   - value: semi-structured
-    label: Semi-structured (Does not fully conforms to the tabular format of structured data but may contain tags and markers identifying properties to arrange
+    label: Semi-structured (does not fully conform to the tabular format of structured data, but may contain tags or markers identifying properties to arrange it into an organisational framework)
   - value: unstructured
-    label: Unstructured (Cannot be stored in relational databases and is often stored in its raw format, such as photographs of rivers and social media posts)
+    label: Unstructured (data cannot be stored in relational databases and is often stored in its raw format, such as images)
 
 - field_name: uploader_estimation_of_extent
   label: Uploader estimation of extent to which data have been processed
-  required: true
-  preset: select
+  required: false
+  preset: radio
   choices:
   - value: raw
     label: Raw
@@ -238,7 +202,7 @@ dataset_fields:
 - field_name: data_classification
   label: is the Data
   required: false
-  preset: select
+  preset: radio
   choices:
   - value: time series
     label: Time series
@@ -248,7 +212,7 @@ dataset_fields:
 - field_name: alternate_identifier
   label: Alternate Identifier
   help_text: Any unique identifier for the metadata/dataset (e.g links to other identifiers, DOI, ISBN. Mandatory for replacement versions of the same data).
-  required: flase
+  required: false
   form_placeholder: eg. DOI
 
 - field_name: vertical_extent_datum
@@ -257,10 +221,10 @@ dataset_fields:
   required: flase
   form_placeholder:
 
-- field_name: minimum_maximum_extent, for mohab, this should be from-to two calendars.
+- field_name: minimum_maximum_extent
   label: Vertical Minimum-Maximum Extent
   help_text: specify the vertical minimum and maximum extent
-  preset: simple_subfields # customized by mohab
+  preset: simple_subfields # customized by mohab(a lot to be added)
   required: false
   repeating_subfields:
     - value: minimum_vertical_extent
@@ -365,6 +329,20 @@ resource_fields:
 
 
 
+# - field_name: contact_address
+#   label: Contact Address
+#   repeating_subfields:
+#   - field_name: address
+#     label: Address
+#     required: true
+#   - field_name: city
+#     label: City
+#   - field_name: state
+#     label: State
+#   - field_name: postal_code
+#     label: Postal Code
+#   - field_name: country
+#     label: Country
 
 
 
@@ -432,3 +410,21 @@ resource_fields:
 #     label: Processing
 #   - value: access
 #     label: Access
+
+# - field_name: owner_org
+#   label: Institution
+#   help_text: input your institution
+#   required: true
+#   form_placeholder: Your institution
+  #preset: emc_dataset_organization
+  # the field name owner_org is required by ckanex-scheming
+
+    # preset: multiple_text
+    # form_blanks: 1
+    # required: true
+
+# - field_name: contact_same_as_creator
+#   label: is the contact person for this dataset is the author(s)
+#   required: false
+#   validators: boolean_validator
+#   preset: emc_checkbox
