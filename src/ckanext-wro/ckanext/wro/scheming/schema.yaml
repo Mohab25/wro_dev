@@ -7,7 +7,7 @@ dataset_fields:
 - field_name: email
   label: Email
   help_text: input your emial address
-  required: true
+  required: false
   form_placeholder: Your email address
 
 - field_name: title
@@ -70,7 +70,7 @@ dataset_fields:
 - field_name: dataset_description
   label: Dataset Description
   help_text: Short description of dataset, e.g. 0-500 words
-  required: true
+  required: false
   form_placeholder: Description
   form_snippet: markdown.html
 
@@ -94,13 +94,13 @@ dataset_fields:
 - field_name: publisher
   label: Publisher
   help_text: Institution that owns/publishes dataset {will become a drop-down list with all names of SA institutions}
-  required: true
+  required: false
   form_placeholder: Publisher
 
 - field_name: publication_year
   label: Publication Year
   help_text: Year in which the digital object was published
-  required: true
+  required: false
   preset: date
 
 - field_name: wrc_project_number
@@ -111,7 +111,7 @@ dataset_fields:
 - field_name: license
   label: License
   help_text: for creative commons license please visit https://creativecommons.org/
-  required: true
+  required: false
   preset: select
   choices:
   - value: Open (Creative Commons)
@@ -130,7 +130,7 @@ dataset_fields:
 - field_name: keywords
   label: Keywords
   help_text: Keywords are used to tag/describe the dataset for discoverability in data searches. (e.g temperature, salinity, maize)
-  required: true
+  required: false
   form_placeholder: input keywords,
 
 - field_name: spatial
@@ -145,16 +145,16 @@ dataset_fields:
 
 - field_name: data_reference_date
   label: Data Reference Date
-  required: true
+  required: false
   preset: simple_subfields
   help_text: specify the refernce dates
   repeating_subfields:
       - field_name: data_reference_date_to
         label: Data Reference Date (to)
-        required: true
+        required: false
         preset: date
       - field_name: data_reference_date_from
-        required: true
+        required: false
         label: Data Reference Date (from)
         preset: date
 
