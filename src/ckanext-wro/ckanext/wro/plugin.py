@@ -3,6 +3,7 @@ import ckan.plugins.toolkit as toolkit
 from .logic.action import create
 from ckan.common import config
 from . import helpers
+import pathlib
 
 class WroPlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IConfigurer)
@@ -11,7 +12,6 @@ class WroPlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.ITemplateHelpers)
     plugins.implements(plugins.IResourceController, inherit=True) # temp testing 
     #IDatasetForm can be added
-    
     # IConfigurer
 
     def update_config(self, config_):
@@ -20,7 +20,6 @@ class WroPlugin(plugins.SingletonPlugin):
         toolkit.add_resource('fanstatic',
             'wro')
         toolkit.add_resource('assets','template_change_assets')
-
     
     # IActions:
     
@@ -32,7 +31,6 @@ class WroPlugin(plugins.SingletonPlugin):
         return{
             'resource_create':create.resource_create
         }
-
     
     # IResourceController
 
@@ -44,8 +42,11 @@ class WroPlugin(plugins.SingletonPlugin):
         if resource_dict['url_type'] == 'upload':
             if resource_dict['name'] != '':
                 res_name = resource_dict['name'].lower()
-                res_format = resource_dict['format'].lower()
-                resource_dict['url'] = f'https://storage.cloud.google.com/mohabtester/{res_name}.{res_format}'
+                name = pathlib.Path(res_name).stem
+                ext = pathlib.Path(res_name).suffix
+                full_name = name+resource_dict['id']+ext
+                wro_theme = resource_dict['wro_theme'].lower() # .lower() to avoid any superises, need refactoring.
+                resource_dict['url'] = f'https://storage.cloud.google.com/mohabtester/{wro_theme}/{full_name}'
 
     # IHelpers
     def get_helpers(self):

@@ -1,6 +1,8 @@
 import ckan.logic as logic 
 import ckan.plugins as plugins
 import ckan.lib.uploader as uploader
+from ckan.common import config # change here
+import pathlib
 
 _check_access = logic.check_access
 _get_action = logic.get_action
@@ -56,12 +58,14 @@ def resource_create(context, data_dict):
         {'id': package_id})
     _check_access('resource_create', context, data_dict)
 
+    wro_theme = pkg_dict['wro_theme']
+
     for plugin in plugins.PluginImplementations(plugins.IResourceController):
         plugin.before_create(context, data_dict)
 
     if 'resources' not in pkg_dict:
         pkg_dict['resources'] = []
-
+    
     upload = uploader.get_resource_uploader(data_dict)
 
     if 'mimetype' not in data_dict:
@@ -72,6 +76,7 @@ def resource_create(context, data_dict):
         if hasattr(upload, 'filesize'):
             data_dict['size'] = upload.filesize
 
+    data_dict['wro_theme'] = wro_theme
     pkg_dict['resources'].append(data_dict)
     try:
         context['defer_commit'] = True
@@ -88,19 +93,21 @@ def resource_create(context, data_dict):
     # package_show until after commit
     upload.upload(context['package'].resources[-1].id,
                   uploader.get_max_resource_size())
-
+    
+    # mohab changed here
+    # need to change the resource before commiting to database name+rid+ext
+    resource_name = context['package'].resources[-1].name
+    name = pathlib.Path(resource_name).stem
+    ext = pathlib.Path(resource_name).suffix
+    full_name = name+context['package'].resources[-1].id+ext
+    container_name = config.get('ckanext.cloudstorage.container_name')
+    context['package'].resources[-1].url = f'https://storage.cloud.google.com/{container_name}/{wro_theme}/{full_name}'
     model.repo.commit()
 
     #  Run package show again to get out actual last_resource
     updated_pkg_dict = _get_action('package_show')(context, {'id': package_id})
     resource = updated_pkg_dict['resources'][-1]
-    
-    # mohab changed here
-    # wro_theme = updated_pkg_dict['wro_theme']
-    # resource_name = resource['name']
-    # resource_format = resource['format'].lower()
-    # resource['url'] = f'https://storage.cloud.google.com/mohabtester/{wro_theme}/{resource_name}.{resource_format}'
-    
+
     # from here this the plugin
     
     #  Add the default views to the new resource

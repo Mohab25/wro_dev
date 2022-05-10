@@ -1,14 +1,14 @@
 # wro-js:
-#   filter: rjsmin
+#   filters: rjsmin
 #   output: ckanext-wro/%(version)s-wro.js
 #   contents:
-#     - js/wro.js
+#     - wro.js
 #   extra:
 #     preload:
 #       - base/main
 
 dataset-spatial-extent-map-js:
-  filter: rjsmin
+  filters: rjsmin
   output: ckanext-wro/%(version)s-datasetSpatialExtentMap.js
   contents:
     - js/datasetSpatialExtentMap.js
@@ -16,14 +16,24 @@ dataset-spatial-extent-map-js:
     preload:
       - base/main
 
-dataset-spatial-extent-map-css:
-  filter: cssrewrite
-  output: ckanext-wro/%(version)s-sptial_map.css
+scheming-toggle-visibility-js:
+  filters: rjsmin
+  output: ckanext-wro/%(version)s-wro.js
+  extra:
+    preload:
+      - base/main
   contents:
-    - css/styles.css
+    - scripts/toggleVisibility.js
+
+
+# dataset-spatial-extent-map-css:
+#   filters: cssrewrite
+#   output: ckanext-wro/%(version)s-sptial_map.css
+#   contents:
+#     - css/styles.css
 
 wro-css:
-  filter: cssrewrite
+  filters: cssrewrite
   output: ckanext-wro/%(version)s-wro.css
   contents:
     - css/styles.css
