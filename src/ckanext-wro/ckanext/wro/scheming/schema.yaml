@@ -26,6 +26,7 @@ dataset_fields:
 - field_name: authors
   label: Authors
   repeating_label: Author
+  preset: repeated_subfields_extended
   repeating_subfields:
     - field_name: author_name
       label: Author Name
@@ -46,13 +47,17 @@ dataset_fields:
     - field_name: contact_same_as_author
       label: is this author a contact person for the dataset?
       required: true
-      validators: boolean_validator
-      preset: emc_checkbox 
+      #validators: boolean_validator
+      preset: mod_checkbox
+      choices:
+        - value:
+          label: 
 
 - field_name: contact_person
   label: Contact person
   help_text: leave blank if it the same as the author
   required: false
+  preset: repeated_subfields_extended
   repeating_subfields:
     - field_name: contact_name
       label: Contact name
@@ -78,7 +83,11 @@ dataset_fields:
   label: Did the Author / Contact organization collect the data?
   required: true
   validators: boolean_validator
-  preset: emc_checkbox 
+  preset: mod_checkbox 
+  choices:
+    - value:
+      label:
+
 
 - field_name: data_collection_organization
   label: Name of organization collected the data
@@ -269,8 +278,10 @@ dataset_fields:
   label: I agree to the Data Management Plan and Term and Conditions of the WRO
   required: true
   validators: boolean_validator
-  preset: emc_checkbox
-
+  preset: mod_checkbox
+  choices:
+    - value:
+      label:
 
 resource_fields:
 
@@ -297,7 +308,10 @@ resource_fields:
     label: Is Data Supplementary?
     required: false
     validators: boolean_validator
-    preset: emc_checkbox
+    preset: mod_checkbox
+    choices:
+      - value:
+        label:
     help_text: will be considered primary data assets if not specified
 
 
@@ -464,7 +478,7 @@ resource_fields:
 #   label: is the contact person for this dataset is the author(s)
 #   required: false
 #   validators: boolean_validator
-#   preset: emc_checkbox
+#   preset: mod_checkbox
 
 # - field_name: owner_org
 #   label: Institution

@@ -1,11 +1,8 @@
 {# A complex field with repeating sub-fields #}
-
 {% include 'scheming/snippets/subfields_asset.html' %}
 {% import 'macros/form.html' as form %}
-{% asset 'template_change_assets/scheming-toggle-visibility-js' %}
 {% macro repeating_panel(index, index1) %}
-
-  <div class="scheming-subfield-group" data-field="{{ field.field_name }}" data-group-index="{{ index }}" data-module="toggle_visibility">
+  <div class="scheming-subfield-group getter_{{ field.field_name }}" data-field="{{ field.field_name }}" data-group-index="{{ index }}" >
     <div class="panel panel-default">
       <header class="panel-heading">
         {% block field_removal_button%}
@@ -72,7 +69,7 @@
 	    {{ repeating_panel(index, index + 1) }}
 	  {% endfor %}
 	</div>
-	<div class="control-medium">
+	<div class="control-medium getter_{{ field.field_name }}">
 	  <a href="javascript:;" name="repeating-add" class="btn btn-link"
 	    >{% block add_button_text %}<i class="fa fa-plus" aria-hidden="true"></i> {{ _('Add') }}{% endblock %}</a>
 

@@ -29,10 +29,14 @@ presets:
   #     form_snippet: "dataset_spatial_extent.html"
   #     validators: emc_bbox_converter
 
-  - preset_name: emc_checkbox
+  - preset_name: mod_checkbox
     values:
-      form_snippet: "dataset_featured.html"
+      form_snippet: "multiple_checkbox_mod.html"
   
   - preset_name: simple_subfields
     values:
       form_snippet: "simple_subfields.html"
+
+  - preset_name: repeated_subfields_extended
+    values:
+      form_snippet: "repeating_subfields_extended.html"
