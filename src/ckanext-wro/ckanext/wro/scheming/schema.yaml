@@ -92,6 +92,7 @@ dataset_fields:
 - field_name: data_collection_organization
   label: Name of organization collected the data
   required: false
+  preset: data_collection_text_preset
 
 
 - field_name: dataset_language
