@@ -218,7 +218,7 @@ dataset_fields:
 
 - field_name: data_structure_category
   label: Data structure category 
-  required: false
+  required: true
   preset: radio
   choices:
   - value: structured

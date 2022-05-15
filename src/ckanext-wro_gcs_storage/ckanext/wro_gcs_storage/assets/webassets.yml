@@ -1,0 +1,14 @@
+# wro_gcs_storage-js:
+#   filter: rjsmin
+#   output: ckanext-wro_gcs_storage/%(version)s-wro_gcs_storage.js
+#   contents:
+#     - js/wro_gcs_storage.js
+#   extra:
+#     preload:
+#       - base/main
+
+# wro_gcs_storage-css:
+#   filter: cssrewrite
+#   output: ckanext-wro_gcs_storage/%(version)s-wro_gcs_storage.css
+#   contents:
+#     - css/wro_gcs_storage.css
