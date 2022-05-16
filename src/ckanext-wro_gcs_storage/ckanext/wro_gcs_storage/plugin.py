@@ -5,7 +5,7 @@ import ckan.plugins.toolkit as toolkit
 import pathlib
 from . import gcs_uploader
 from .gcs_functions import delete_blob
-
+from . import template_helpers as h
 from .logic.action.delete import resource_delete as resourceDelete
 from .logic.action.create import resource_create
 
@@ -23,14 +23,6 @@ def resource_delete(resource_delete,context, data_dict):
 #     global res_dict
 #     data_dict = pkg_data_dict
 #     return data_dict
-
-
-def resource_read_helper(data_dict:dict):
-    # the problem with the current view is that is the resource
-    # provided is not the last updated one, get the resouce and pass it
-    id = data_dict['id']
-    resource = toolkit.get_action('resource_show')(data_dict={'id':id})
-    return resource
 
 class WroGcsStoragePlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IConfigurer)
@@ -57,7 +49,7 @@ class WroGcsStoragePlugin(plugins.SingletonPlugin):
 
     def get_helpers(self):
         return{
-            'resource_read_helper':resource_read_helper
+            'resource_read_helper':h.resource_read_helper
         }
 
     def get_uploader(self, upload_to, old_filename):

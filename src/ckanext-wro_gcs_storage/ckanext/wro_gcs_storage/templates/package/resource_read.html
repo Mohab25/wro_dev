@@ -5,10 +5,10 @@
 #}
 
 {% ckan_extends %}
-{% block resource_read_title %}<h1 class="page-heading">{{h.resource_read_helper(res)}}</h1>{% endblock %}
+{% block resource_read_title %}<h1 class="page-heading">{{h.resource_read_helper(res).resource.name}}</h1>{% endblock %}
 {% block resource_read_url %}
   {% if res.url and h.is_url(res.url) %}
-    <p class="text-muted ellipsis">{{ _('URL:') }} <a class="resource-url-analytics" href="{{ h.resource_read_helper(res).name }}" title="{{ res.url }}">{{ h.resource_read_helper(res).url }}</a></p>
+    <p class="text-muted ellipsis">{{ _('URL:') }} <a class="resource-url-analytics" href="{{ h.resource_read_helper(res).cloud_url }}" title="{{ res.url }}">{{ h.resource_read_helper(res).cloud_url }}</a></p>
   {% elif res.url %}
     <p class="text-muted break-word">{{ _('URL:') }} {{ h.resource_read_helper(res).name }}</p>
   {% endif %}
