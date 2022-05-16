@@ -42,7 +42,6 @@ class ResourceCloudStorage():
         if isinstance(upload_field_storage, (ALLOWED_UPLOAD_TYPES)):
             self.filename = munge.munge_filename(upload_field_storage.filename)
             self.file_upload = _get_underlying_file(upload_field_storage)
-            resource['url'] = self.filename
             resource['url_type'] = 'upload'
         elif self._clear and resource.get('id'):
             # Apparently, this is a created-but-not-commited resource whose
@@ -62,17 +61,17 @@ class ResourceCloudStorage():
         # and construct dynamic urls inisde the container
         
         # get the wro_theme
-        pack = toolkit.get_action('package_show')(data_dict={'id':self.resource['package_id']})
-        wro_theme = pack['wro_theme']
-        #raise RuntimeError(rid)
+        #pack = toolkit.get_action('package_show')(data_dict={'id':self.resource['package_id']})
+        res = toolkit.get_action('resource_show')(data_dict={'id':rid})
+
         # we need to generate unique names inside the container
         name = pathlib.Path(filename).stem
         ext = pathlib.Path(filename).suffix
-        file_name = name+rid+ext
+        file_name = name+'_id_'+rid+ext
         # the actual return
         return os.path.join(
-            wro_theme,
-            file_name,
+            res['cloud_path'],
+            file_name
         )
 
     def upload(self, id, max_size=10):
@@ -82,15 +81,15 @@ class ResourceCloudStorage():
         :param max_size: Ignored.
         """
         if self.filename:
-            # TODO: This might not be needed once libcloud is upgraded
             if isinstance(self.file_upload, SpooledTemporaryFile):
                 self.file_upload.next = self.file_upload._file  # changed here
-                upload_blob("mohabtester",self.file_upload, "homab.png")
+                upload_path = self.path_from_filename(id,self.filename)
+                self.resource['url'] = f'https://storage.cloud.google.com/{upload_path}'
+                upload_blob("mohabtester",self.file_upload, upload_path)
 
         elif self._clear and self.old_filename:  # and not self.leave_files
             # This is only set when a previously-uploaded file is replace
             # by a link. We want to delete the previously-uploaded file.
-            raise RuntimeError('deletion')
             try:
                delete_blob("homab.png")
             except:

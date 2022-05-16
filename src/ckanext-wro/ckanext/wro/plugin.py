@@ -1,16 +1,11 @@
 import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
-from .logic.action import create
 from ckan.common import config
 from . import helpers
-import pathlib
 
 class WroPlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IConfigurer)
-    plugins.implements(plugins.IActions) 
-    plugins.implements(plugins.IActions)
     plugins.implements(plugins.ITemplateHelpers)
-    plugins.implements(plugins.IResourceController, inherit=True) # temp testing 
     #IDatasetForm can be added
     # IConfigurer
 
@@ -20,33 +15,6 @@ class WroPlugin(plugins.SingletonPlugin):
         toolkit.add_resource('fanstatic',
             'wro')
         toolkit.add_resource('assets','template_change_assets')
-    
-    # IActions:
-    
-    def get_actions(self):
-        """
-            overriding the default creation to use
-            google cloud url mapping for resources
-        """
-        return{
-            'resource_create':create.resource_create
-        }
-    
-    # IResourceController
-
-    def before_show(self,resource_dict):
-        """
-            overriding the display to show google cloud
-            GCS url, instead of the default local mapping 
-        """
-        if resource_dict['url_type'] == 'upload':
-            if resource_dict['name'] != '':
-                res_name = resource_dict['name'].lower()
-                name = pathlib.Path(res_name).stem
-                ext = pathlib.Path(res_name).suffix
-                full_name = name+resource_dict['id']+ext
-                wro_theme = resource_dict['wro_theme'].lower() # .lower() to avoid any superises, need refactoring.
-                resource_dict['url'] = f'https://storage.cloud.google.com/mohabtester/{wro_theme}/{full_name}'
 
     # IHelpers
     def get_helpers(self):

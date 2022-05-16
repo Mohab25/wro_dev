@@ -15,8 +15,9 @@ import ckan.lib.dictization as dictization
 import ckan.lib.dictization.model_dictize as model_dictize
 import ckan.lib.api_token as api_token
 from ckan import authz
-
+import ckan.plugins.toolkit as toolkit
 from ckan.common import _
+from ...gcs_functions import delete_blob
 
 
 log = logging.getLogger('ckan.logic')
@@ -55,7 +56,9 @@ def resource_delete(context, data_dict):
     package_id = entity.get_package_id()
 
     pkg_dict = _get_action('package_show')(context, {'id': package_id})
-
+    
+    res = toolkit.get_action('resource_show')(data_dict={'id':data_dict['id']})
+    resource_cloud_path = toolkit.get_action('resource_show')(data_dict={'id':data_dict['id']})['cloud_path']
     for plugin in plugins.PluginImplementations(plugins.IResourceController):
         plugin.before_delete(context, data_dict,
                              pkg_dict.get('resources', []))
@@ -75,7 +78,7 @@ def resource_delete(context, data_dict):
         plugin.after_delete(context, pkg_dict.get('resources', []))
 
     model.repo.commit()
-
+    delete_blob(resource_cloud_path,{'id':res['id'],'name':res['name']})
 
 def resource_view_delete(context, data_dict):
     '''Delete a resource_view.

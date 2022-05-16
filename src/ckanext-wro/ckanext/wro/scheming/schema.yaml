@@ -230,7 +230,7 @@ dataset_fields:
 
 - field_name: uploader_estimation_of_extent
   label: Uploader estimation of extent to which data have been processed
-  required: false
+  required: true
   preset: radio
   choices:
   - value: raw
@@ -244,7 +244,7 @@ dataset_fields:
 
 - field_name: data_classification
   label: is the Data Time seriesed or static
-  required: false
+  required: true
   preset: radio
   choices:
   - value: time series

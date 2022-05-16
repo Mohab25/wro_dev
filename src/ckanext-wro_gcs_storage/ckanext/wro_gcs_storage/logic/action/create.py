@@ -1,8 +1,53 @@
+import os
 import ckan.logic as logic 
 import ckan.plugins as plugins
 import ckan.lib.uploader as uploader
 from ckan.common import config # change here
 import pathlib
+import logging
+import random
+import re
+from socket import error as socket_error
+import datetime
+import ckan.plugins.toolkit as toolkit
+
+import six
+
+import ckan.common
+from sqlalchemy import func
+
+import ckan.lib.plugins as lib_plugins
+import ckan.logic as logic
+import ckan.plugins as plugins
+import ckan.lib.dictization
+import ckan.logic.action
+import ckan.logic.schema
+import ckan.lib.dictization.model_dictize as model_dictize
+import ckan.lib.dictization.model_save as model_save
+import ckan.lib.navl.dictization_functions
+import ckan.lib.uploader as uploader
+import ckan.lib.mailer as mailer
+import ckan.lib.datapreview
+import ckan.lib.api_token as api_token
+import ckan.authz as authz
+
+from ckan.common import _, config
+
+# FIXME this looks nasty and should be shared better
+from ckan.logic.action.update import _update_package_relationship
+
+log = logging.getLogger(__name__)
+
+# Define some shortcuts
+# Ensure they are module-private so that they don't get loaded as available
+# actions in the action API.
+_validate = ckan.lib.navl.dictization_functions.validate
+_check_access = logic.check_access
+_get_action = logic.get_action
+ValidationError = logic.ValidationError
+NotFound = logic.NotFound
+NotAuthorized = logic.NotAuthorized
+_get_or_bust = logic.get_or_bust
 
 _check_access = logic.check_access
 _get_action = logic.get_action
@@ -58,15 +103,26 @@ def resource_create(context, data_dict):
         {'id': package_id})
     _check_access('resource_create', context, data_dict)
 
-    wro_theme = pkg_dict['wro_theme']
+    # ================== mohab acted here 
 
+    # this is a custom behavior, i got the elements which defines the path in the cloud sotrage 
+    # and combine them in one variable added to the data dictionary called cloud_path 
+    # it will be available to the uploaded, and the rest of the resource_create method  
+
+    wro_theme = pkg_dict['wro_theme'] 
+    data_structure_category = pkg_dict['data_structure_category']
+    uploader_estimation_of_extent = pkg_dict['uploader_estimation_of_extent']
+    data_classification = pkg_dict['data_classification']
+    cloud_path = os.path.join(wro_theme,data_structure_category,uploader_estimation_of_extent,data_classification)
+    data_dict['cloud_path'] = cloud_path
+    
     for plugin in plugins.PluginImplementations(plugins.IResourceController):
         plugin.before_create(context, data_dict)
 
     if 'resources' not in pkg_dict:
         pkg_dict['resources'] = []
-    
-    upload = uploader.get_resource_uploader(data_dict)
+
+    upload = uploader.get_resource_uploader(data_dict) # this is sent to the uploader
 
     if 'mimetype' not in data_dict:
         if hasattr(upload, 'mimetype'):
@@ -76,7 +132,6 @@ def resource_create(context, data_dict):
         if hasattr(upload, 'filesize'):
             data_dict['size'] = upload.filesize
 
-    data_dict['wro_theme'] = wro_theme
     pkg_dict['resources'].append(data_dict)
     try:
         context['defer_commit'] = True
@@ -96,18 +151,22 @@ def resource_create(context, data_dict):
     
     # mohab changed here
     # need to change the resource before commiting to database name+rid+ext
-    resource_name = context['package'].resources[-1].name
+    the_res = context['package'].resources[-1]
+    the_cloud_path = the_res.extras['cloud_path']
+    resource_name = the_res.name    # this name is file name not the name of the resource provided in the form
     name = pathlib.Path(resource_name).stem
     ext = pathlib.Path(resource_name).suffix
-    full_name = name+context['package'].resources[-1].id+ext
-    container_name = config.get('ckanext.cloudstorage.container_name')
-    context['package'].resources[-1].url = f'https://storage.cloud.google.com/{container_name}/{wro_theme}/{full_name}'
+    full_name = name+'_id_'+context['package'].resources[-1].id+ext
+    container_name = config.get('ckanext.cloudstorage.container_name')   # this can be refactored to get a general name of the bucket from config
+    full_url = 'https://storage.cloud.google.com/'+container_name+'/'+the_cloud_path+'/'+full_name
+    context['package'].resources[-1].url = f'{full_url}'
     model.repo.commit()
 
     #  Run package show again to get out actual last_resource
     updated_pkg_dict = _get_action('package_show')(context, {'id': package_id})
     resource = updated_pkg_dict['resources'][-1]
-
+    resource['url'] = full_url
+    
     # from here this the plugin
     
     #  Add the default views to the new resource

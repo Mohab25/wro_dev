@@ -1,4 +1,5 @@
 from google.cloud import storage
+import pathlib
 
 def initialize_google_client():
     service_account_path = 'home/mohab/Main/development/googleAuthKeys/psyched-battery-346820-bde80b8fa056.json'
@@ -13,8 +14,16 @@ def upload_blob(bucket_name, source_file_name, destination_blob_name):
     blob.upload_from_file(source_file_name)
 
 
-def delete_blob(res_path, res_id):
+def delete_blob(resource_cloud_path, resource_dict):
     client = initialize_google_client()
     bucket = client.bucket("mohabtester")
-    blob = bucket.blob(f"homab.png")
-    blob.delete()
+    resource_name = resource_dict['name']
+    name = pathlib.Path(resource_name).stem
+    ext = pathlib.Path(resource_name).suffix
+    resource_id = resource_dict['id']
+    resource_cloud_name = resource_cloud_path+ '/' + name + '_id_'+ resource_id + ext
+    
+    blobs = client.list_blobs("mohabtester",prefix=f"{resource_cloud_path}/")
+    for blob in blobs:
+        if blob.name == resource_cloud_name:
+            blob.delete()
