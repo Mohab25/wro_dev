@@ -38,10 +38,14 @@ class ResourceCloudStorage():
         self.resource = resource
         upload_field_storage = resource.pop('upload', None)
         self._clear = resource.pop('clear_upload', None)
+        ## mohab 
+        self.is_resource_link = False
         # Check to see if a file has been provided
         if isinstance(upload_field_storage, (ALLOWED_UPLOAD_TYPES)):
             self.filename = munge.munge_filename(upload_field_storage.filename)
             self.file_upload = _get_underlying_file(upload_field_storage)
+            if self.filename =='' and self.resource['name'].startswith('http'):
+                self.is_resource_link = True
             resource['url_type'] = 'upload'
         elif self._clear and resource.get('id'):
             # Apparently, this is a created-but-not-commited resource whose
@@ -80,12 +84,13 @@ class ResourceCloudStorage():
         :param id: The resource_id.
         :param max_size: Ignored.
         """
-        if self.filename:
-            if isinstance(self.file_upload, SpooledTemporaryFile):
-                self.file_upload.next = self.file_upload._file  # changed here
-                upload_path = self.path_from_filename(id,self.filename)
-                self.resource['url'] = f'https://storage.cloud.google.com/{upload_path}'
-                upload_blob("mohabtester",self.file_upload, upload_path)
+        if not self.is_resource_link:
+            if self.filename:
+                if isinstance(self.file_upload, SpooledTemporaryFile):
+                    self.file_upload.next = self.file_upload._file  # changed here
+                    upload_path = self.path_from_filename(id,self.filename)
+                    self.resource['url'] = f'https://storage.cloud.google.com/{upload_path}'
+                    upload_blob("mohabtester",self.file_upload, upload_path)
 
         elif self._clear and self.old_filename:  # and not self.leave_files
             # This is only set when a previously-uploaded file is replace
@@ -97,6 +102,11 @@ class ResourceCloudStorage():
                 # for it to not yet exist in a committed state due to an
                 # outstanding lease.
                 return
+
+    def get_path(self,id):
+        return 'https://avatars.githubusercontent.com/u/7395888?s=200&v=4'
+
+
 
     @property
     def package(self):
