@@ -38,6 +38,11 @@ from ckan.logic.action.update import _update_package_relationship
 
 log = logging.getLogger(__name__)
 
+# mohab, some customization
+from .actions_helpers import is_resource_link
+
+
+
 # Define some shortcuts
 # Ensure they are module-private so that they don't get loaded as available
 # actions in the action API.
@@ -121,7 +126,7 @@ def resource_create(context, data_dict):
 
     if 'resources' not in pkg_dict:
         pkg_dict['resources'] = []
-
+    data_dict = is_resource_link(data_dict)
     upload = uploader.get_resource_uploader(data_dict) # this is sent to the uploader
 
     if 'mimetype' not in data_dict:
