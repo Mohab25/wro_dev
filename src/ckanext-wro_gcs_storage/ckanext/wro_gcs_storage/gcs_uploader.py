@@ -39,13 +39,11 @@ class ResourceCloudStorage():
         upload_field_storage = resource.pop('upload', None)
         self._clear = resource.pop('clear_upload', None)
         ## mohab 
-        self.is_resource_link = False
+        self.is_resource_link = self.resource['is_link']
         # Check to see if a file has been provided
         if isinstance(upload_field_storage, (ALLOWED_UPLOAD_TYPES)):
             self.filename = munge.munge_filename(upload_field_storage.filename)
             self.file_upload = _get_underlying_file(upload_field_storage)
-            if self.filename =='' and self.resource['name'].startswith('http'):
-                self.is_resource_link = True
             resource['url_type'] = 'upload'
         elif self._clear and resource.get('id'):
             # Apparently, this is a created-but-not-commited resource whose
@@ -84,7 +82,7 @@ class ResourceCloudStorage():
         :param id: The resource_id.
         :param max_size: Ignored.
         """
-        if not self.is_resource_link:
+        if self.is_resource_link is False:
             if self.filename:
                 if isinstance(self.file_upload, SpooledTemporaryFile):
                     self.file_upload.next = self.file_upload._file  # changed here
