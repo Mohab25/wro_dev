@@ -7,7 +7,7 @@ dataset_fields:
 - field_name: email
   label: Email
   help_text: input your emial address
-  required: false
+  required: true
   form_placeholder: Your email address
 
 - field_name: title
@@ -75,7 +75,7 @@ dataset_fields:
 - field_name: dataset_description
   label: Dataset Description
   help_text: Short description of dataset, e.g. 0-500 words
-  required: false
+  required: true
   form_placeholder: Description
   form_snippet: markdown.html
 
@@ -104,13 +104,13 @@ dataset_fields:
 - field_name: publisher
   label: Publisher
   help_text: Institution that owns/publishes dataset {will become a drop-down list with all names of SA institutions}
-  required: false
+  required: true
   form_placeholder: Publisher
 
 - field_name: publication_year
   label: Publication Year
   help_text: Year in which the digital object was published
-  required: false
+  required: true
   preset: date
 
 - field_name: wrc_project_number
@@ -121,7 +121,7 @@ dataset_fields:
 - field_name: license
   label: License
   help_text: for creative commons license please visit https://creativecommons.org/
-  required: false
+  required: true
   preset: select
   choices:
   - value: Open (Creative Commons)
@@ -140,7 +140,7 @@ dataset_fields:
 - field_name: keywords
   label: Keywords
   help_text: Keywords are used to tag/describe the dataset for discoverability in data searches. (e.g temperature, salinity, maize)
-  required: false
+  required: true
   form_placeholder: input keywords,
 
 - field_name: spatial
@@ -161,10 +161,10 @@ dataset_fields:
   repeating_subfields:
       - field_name: data_reference_date_to
         label: Data Reference Date (to)
-        required: false
+        required: true
         preset: date
       - field_name: data_reference_date_from
-        required: false
+        required: true
         label: Data Reference Date (from)
         preset: date
 
@@ -301,7 +301,7 @@ resource_fields:
 
   - field_name: format
     label: Format
-    required: false
+    required: true
     preset: resource_format_autocomplete
     help_text: Name of the data transfer format - This is a SANS 1878 mandatory field
 

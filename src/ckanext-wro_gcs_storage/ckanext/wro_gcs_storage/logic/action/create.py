@@ -5,18 +5,9 @@ import ckan.lib.uploader as uploader
 from ckan.common import config # change here
 import pathlib
 import logging
-import random
-import re
 from socket import error as socket_error
-import datetime
-import ckan.plugins.toolkit as toolkit
-
-import six
-
 import ckan.common
 from sqlalchemy import func
-
-import ckan.lib.plugins as lib_plugins
 import ckan.logic as logic
 import ckan.plugins as plugins
 import ckan.lib.dictization
@@ -26,11 +17,7 @@ import ckan.lib.dictization.model_dictize as model_dictize
 import ckan.lib.dictization.model_save as model_save
 import ckan.lib.navl.dictization_functions
 import ckan.lib.uploader as uploader
-import ckan.lib.mailer as mailer
 import ckan.lib.datapreview
-import ckan.lib.api_token as api_token
-import ckan.authz as authz
-
 from ckan.common import _, config
 
 # FIXME this looks nasty and should be shared better
@@ -162,7 +149,7 @@ def resource_create(context, data_dict):
     name = pathlib.Path(resource_name).stem
     ext = pathlib.Path(resource_name).suffix
     full_name = name+'_id_'+context['package'].resources[-1].id+ext
-    container_name = config.get('ckanext.cloudstorage.container_name')   # this can be refactored to get a general name of the bucket from config
+    container_name = config.get('container_name')   # this can be refactored to get a general name of the bucket from config
     full_url = 'https://storage.cloud.google.com/'+container_name+'/'+the_cloud_path+'/'+full_name
     context['package'].resources[-1].url = f'{full_url}'
     model.repo.commit()

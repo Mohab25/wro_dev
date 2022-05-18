@@ -3,18 +3,9 @@
 '''API functions for deleting data from CKAN.'''
 
 import logging
-
-import sqlalchemy as sqla
-import six
-
-import ckan.lib.jobs as jobs
 import ckan.logic
 import ckan.logic.action
 import ckan.plugins as plugins
-import ckan.lib.dictization as dictization
-import ckan.lib.dictization.model_dictize as model_dictize
-import ckan.lib.api_token as api_token
-from ckan import authz
 import ckan.plugins.toolkit as toolkit
 from ckan.common import _
 from ...gcs_functions import delete_blob

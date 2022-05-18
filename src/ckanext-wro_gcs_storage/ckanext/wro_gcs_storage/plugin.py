@@ -2,27 +2,17 @@ import os
 import ckan
 import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
-import pathlib
 from . import gcs_uploader
-from .gcs_functions import delete_blob
 from . import template_helpers as h
 from .logic.action.delete import resource_delete as resourceDelete
 from .logic.action.create import resource_create
 
-
-_get_or_bust = ckan.logic.get_or_bust
 global_pkg_dict = None
 
 @toolkit.chained_action
 def resource_delete(resource_delete,context, data_dict):
     resourceDelete(context, data_dict=data_dict)
-    res_id = _get_or_bust(data_dict,"id")
-    #delete_blob('',res_id)
 
-# def global_updated_dict(pkg_data_dict):
-#     global res_dict
-#     data_dict = pkg_data_dict
-#     return data_dict
 
 class WroGcsStoragePlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IConfigurer)

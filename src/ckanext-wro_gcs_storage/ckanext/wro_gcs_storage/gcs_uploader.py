@@ -88,7 +88,8 @@ class ResourceCloudStorage():
                     self.file_upload.next = self.file_upload._file  # changed here
                     upload_path = self.path_from_filename(id,self.filename)
                     self.resource['url'] = f'https://storage.cloud.google.com/{upload_path}'
-                    upload_blob("mohabtester",self.file_upload, upload_path)
+                    bucket_name = config.get('container_name')
+                    upload_blob(bucket_name, self.file_upload, upload_path)
 
         elif self._clear and self.old_filename:  # and not self.leave_files
             # This is only set when a previously-uploaded file is replace
@@ -102,7 +103,7 @@ class ResourceCloudStorage():
                 return
 
     def get_path(self,id):
-        return 'https://avatars.githubusercontent.com/u/7395888?s=200&v=4'
+        return ''
 
 
 
