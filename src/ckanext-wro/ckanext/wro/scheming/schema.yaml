@@ -46,7 +46,7 @@ dataset_fields:
       required: false
     - field_name: contact_same_as_author
       label: is this author a contact person for the dataset?
-      required: true
+      required: false
       #validators: boolean_validator
       preset: mod_checkbox
       choices:
@@ -81,7 +81,7 @@ dataset_fields:
 
 - field_name: did_author_or_contact_organization_collect_the_data
   label: Did the Author / Contact organization collect the data?
-  required: true
+  required: false
   validators: boolean_validator
   preset: mod_checkbox 
   choices:

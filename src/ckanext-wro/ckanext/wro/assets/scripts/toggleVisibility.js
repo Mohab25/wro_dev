@@ -38,11 +38,11 @@ ckan.module('ckanext_wro_toggle_repeating_field_visibilty', function($){
       $.proxyAll(this,/_on/); 
       //this.sandbox.subscribe('pub', this._onPublish);    // for some reason the pubsub didn't work 
       //let author_checkbox = $('#field-authors-0-contact_same_as_author-None');   // this gave some inconveniences
-      let author_checkbox = $('#field-authors-0-contact_same_as_author-None')
+      let author_checkbox = $('#field-authors-0-contact_same_as_author')
+      
       author_checkbox.on('change',this._onAlternatePublish)
     },
     _onAlternatePublish:function(e){
-      console.log('checked')
       contact_fields = $(".getter_contact_person")   // didn't use this.el because there are muliple fields with the same config
       contact_fields_label = $('label[for="field-contact_person"]')
       if(e.target.checked){
@@ -64,7 +64,7 @@ ckan.module('ckanext_wro_toggle_repeating_field_visibilty', function($){
      initialize:function(){
       $.proxyAll(this, /_on/)
        console.log('data collection loaded !')
-       let data_collecton_checkbox = $('#field-did_author_or_contact_organization_collect_the_data-None')
+       let data_collecton_checkbox = $('#field-did_author_or_contact_organization_collect_the_data')
        data_collecton_checkbox.on('change', this._onChange)
       },
       _onChange:function(e){
