@@ -65,7 +65,6 @@ class ResourceCloudStorage():
         # get the wro_theme
         #pack = toolkit.get_action('package_show')(data_dict={'id':self.resource['package_id']})
         res = toolkit.get_action('resource_show')(data_dict={'id':rid})
-
         # we need to generate unique names inside the container
         name = pathlib.Path(filename).stem
         ext = pathlib.Path(filename).suffix
