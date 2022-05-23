@@ -9,7 +9,7 @@
 {% if h.resource_read_helper(res).resource.is_link  %}
     {% set custom_url = h.resource_read_helper(res).resource.name.lower() %}
   {% else %}
-    {% set custom_url = h.resource_read_helper(res).cloud_url.lower() %}
+    {% set custom_url = h.resource_read_helper(res).cloud_url %}
 {% endif %}
 
 {% block resource_read_title %}<h1 class="page-heading">{{h.resource_read_helper(res).resource.name}}</h1>{% endblock %}

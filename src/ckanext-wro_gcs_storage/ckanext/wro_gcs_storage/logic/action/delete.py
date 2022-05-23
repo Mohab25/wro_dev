@@ -50,8 +50,8 @@ def resource_delete(context, data_dict):
     
     res = toolkit.get_action('resource_show')(data_dict={'id':data_dict['id']})
     resource_cloud_path = toolkit.get_action('resource_show')(data_dict={'id':data_dict['id']})['cloud_path']
-    resource_cloud_path = pkg_dict['name'] + "/" + resource_cloud_path
-
+    resource_cloud_path = resource_cloud_path + "/" + pkg_dict['name'] 
+    
     for plugin in plugins.PluginImplementations(plugins.IResourceController):
         plugin.before_delete(context, data_dict,
                              pkg_dict.get('resources', []))

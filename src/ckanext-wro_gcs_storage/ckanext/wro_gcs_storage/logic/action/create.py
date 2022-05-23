@@ -106,6 +106,7 @@ def resource_create(context, data_dict):
     uploader_estimation_of_extent = pkg_dict['uploader_estimation_of_extent']
     data_classification = pkg_dict['data_classification']
     cloud_path = os.path.join(wro_theme,data_structure_category,uploader_estimation_of_extent,data_classification)
+    cloud_path = cloud_path.title()
     data_dict['cloud_path'] = cloud_path
 
     for plugin in plugins.PluginImplementations(plugins.IResourceController):
@@ -149,8 +150,10 @@ def resource_create(context, data_dict):
     name = pathlib.Path(resource_name).stem
     ext = pathlib.Path(resource_name).suffix
     full_name = name+'_id_'+context['package'].resources[-1].id+ext
-    container_name = config.get('container_name')   # this can be refactored to get a general name of the bucket from config
-    full_url = 'https://storage.cloud.google.com/'+container_name+'/'+the_cloud_path+'/'+full_name
+    container_name = config.get('container_name')
+    pkg_dict = _get_action('package_show')(context, {'id': package_id})
+    pkg_name = pkg_dict['name']
+    full_url = 'https://storage.cloud.google.com/'+container_name+'/'+the_cloud_path+'/'+ pkg_name + "/" +full_name
     context['package'].resources[-1].url = f'{full_url}'
     model.repo.commit()
 
@@ -158,7 +161,6 @@ def resource_create(context, data_dict):
     updated_pkg_dict = _get_action('package_show')(context, {'id': package_id})
     resource = updated_pkg_dict['resources'][-1]
     resource['url'] = full_url
-    
     # from here this the plugin
     
     #  Add the default views to the new resource

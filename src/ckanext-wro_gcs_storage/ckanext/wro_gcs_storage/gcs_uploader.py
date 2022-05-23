@@ -71,8 +71,8 @@ class ResourceCloudStorage():
         file_name = name+'_id_'+rid+ext
         # the actual return
         return os.path.join(
-            self.resource['package_id'],
             res['cloud_path'],
+            self.resource['package_id'],
             file_name
         )
 
@@ -91,16 +91,17 @@ class ResourceCloudStorage():
                     bucket_name = config.get('container_name')
                     upload_blob(bucket_name, self.file_upload, upload_path)
 
-        elif self._clear and self.old_filename:  # and not self.leave_files
-            # This is only set when a previously-uploaded file is replace
-            # by a link. We want to delete the previously-uploaded file.
-            try:
-               delete_blob("homab.png")
-            except:
-                # It's possible for the object to have already been deleted, or
-                # for it to not yet exist in a committed state due to an
-                # outstanding lease.
-                return
+        # this is when the user change the file to a url via "remove" button
+        # elif self._clear and self.old_filename:  # and not self.leave_files
+        #     # This is only set when a previously-uploaded file is replace
+        #     # by a link. We want to delete the previously-uploaded file.
+        #     try:
+        #        delete_blob(self.old_filename)
+        #     except:
+        #         # It's possible for the object to have already been deleted, or
+        #         # for it to not yet exist in a committed state due to an
+        #         # outstanding lease.
+        #         return
 
     def get_path(self,id):
         return ''
