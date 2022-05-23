@@ -69,7 +69,8 @@ def resource_delete(context, data_dict):
         plugin.after_delete(context, pkg_dict.get('resources', []))
 
     model.repo.commit()
-    delete_blob(resource_cloud_path,{'id':res['id'],'name':res['name']})
+    if res['is_link'] is False:
+        delete_blob(resource_cloud_path,{'id':res['id'],'name':res['name']})
 
 def resource_view_delete(context, data_dict):
     '''Delete a resource_view.
