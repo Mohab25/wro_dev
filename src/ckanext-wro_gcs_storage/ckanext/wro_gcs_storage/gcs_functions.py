@@ -16,7 +16,7 @@ def upload_blob(bucket_name, source_file_name, destination_blob_name):
 
 
 def delete_blob(resource_cloud_path, resource_dict):
-    raise RuntimeError(resource_cloud_path)
+    #raise RuntimeError(resource_cloud_path)
     client = initialize_google_client()
     bucket_name = config.get('container_name')
     bucket = client.bucket(bucket_name)
