@@ -13,6 +13,7 @@ def resource_read_helper(data_dict:dict):
     uploader_estimation_of_extent = pkg_dict['uploader_estimation_of_extent']
     data_classification = pkg_dict['data_classification']
     cloud_path = os.path.join(wro_theme,data_structure_category,uploader_estimation_of_extent,data_classification)
-    full_url = 'https://storage.cloud.google.com/mohabtester/'+ cloud_path+ '/'+ pathlib.Path(resource['name']).stem + '_id_' + id + pathlib.Path(resource['name']).suffix
+    bucket_name = toolkit.config.get('container_name') 
+    full_url = f'https://storage.cloud.google.com/{bucket_name}/'+ cloud_path+ '/'+ pathlib.Path(resource['name']).stem + '_id_' + id + pathlib.Path(resource['name']).suffix
     
     return {'resource':resource, 'cloud_url':full_url}

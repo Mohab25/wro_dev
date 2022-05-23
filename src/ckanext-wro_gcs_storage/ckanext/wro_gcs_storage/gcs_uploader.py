@@ -72,6 +72,7 @@ class ResourceCloudStorage():
         file_name = name+'_id_'+rid+ext
         # the actual return
         return os.path.join(
+            self.resource['package_id'],
             res['cloud_path'],
             file_name
         )

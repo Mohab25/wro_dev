@@ -107,7 +107,7 @@ def resource_create(context, data_dict):
     data_classification = pkg_dict['data_classification']
     cloud_path = os.path.join(wro_theme,data_structure_category,uploader_estimation_of_extent,data_classification)
     data_dict['cloud_path'] = cloud_path
-    
+
     for plugin in plugins.PluginImplementations(plugins.IResourceController):
         plugin.before_create(context, data_dict)
 
