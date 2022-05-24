@@ -19,6 +19,6 @@ def resource_read_helper(data_dict:dict):
     cloud_path = os.path.join(wro_theme,data_structure_category,uploader_estimation_of_extent,data_classification)
     cloud_path = cloud_path.title()
     bucket_name = toolkit.config.get('container_name') 
-    full_url = f'https://storage.cloud.google.com/{bucket_name}/'+ cloud_path+ '/'+ package_name + "/" +  pathlib.Path(resource['name']).stem + '_id_' + id + pathlib.Path(resource['name']).suffix
+    full_url = f'https://storage.cloud.google.com/{bucket_name}/'+ cloud_path+ '/'+ package_name + "/" +  pathlib.Path(resource['name']).stem.lower() + '_id_' + id + pathlib.Path(resource['name']).suffix
     
     return {'resource':resource, 'cloud_url':full_url}

@@ -11,14 +11,14 @@ dataset_fields:
   form_placeholder: Your email address
 
 - field_name: title
-  label: Dataset title
+  label: Dataset title (maximum 100 characters)
   preset: title
   required: true
   form_placeholder: eg. A descriptive title
   form_snippet: title.html
 
 - field_name: name
-  label: Dateset Metadata URL
+  label: Dateset metadata URL
   form_placeholder: http://example.com/dataset.json
   preset: dataset_slug
   display_snippet: link.html
@@ -29,10 +29,10 @@ dataset_fields:
   preset: repeated_subfields_extended
   repeating_subfields:
     - field_name: author_name
-      label: Author Name
+      label: Author first name
       required: true
     - field_name: author_surname
-      label: Author Surname
+      label: Author surname
     - field_name: author_email
       label: Email
       required: false
@@ -45,7 +45,7 @@ dataset_fields:
       label: Department
       required: false
     - field_name: contact_same_as_author
-      label: is this author a contact person for the dataset?
+      label: Is this author a contact person for the dataset?
       required: false
       #validators: boolean_validator
       preset: mod_checkbox
@@ -73,14 +73,14 @@ dataset_fields:
       required: false
     
 - field_name: dataset_description
-  label: Dataset Description
+  label: Dataset description
   help_text: Short description of dataset, e.g. 0-500 words
   required: true
   form_placeholder: Description
   form_snippet: markdown.html
 
 - field_name: did_author_or_contact_organization_collect_the_data
-  label: Did the Author / Contact organization collect the data?
+  label: Did the author / contact organization collect the data?
   required: false
   validators: boolean_validator
   preset: mod_checkbox 
@@ -96,7 +96,7 @@ dataset_fields:
 
 
 - field_name: dataset_language
-  label: Dataset Language
+  label: Dataset language
   help_text: Assumed English if not provided
   required: false
   form_placeholder: Dataset language.
@@ -108,13 +108,13 @@ dataset_fields:
   form_placeholder: Publisher
 
 - field_name: publication_year
-  label: Publication Year
+  label: Publication year
   help_text: Year in which the digital object was published
   required: true
   preset: date
 
 - field_name: wrc_project_number
-  label: Project Number
+  label: Project number
   help_text: WRC Project or report number (if applicable)
   required: false
 
@@ -125,7 +125,7 @@ dataset_fields:
   preset: select
   choices:
   - value: Open (Creative Commons)
-    label: Open (Creative Commons)
+    label: Open (Creative commons)
   - value: Restricted access
     label: Restricted access
   - value: Ohter
@@ -141,10 +141,10 @@ dataset_fields:
   label: Keywords
   help_text: Keywords are used to tag/describe the dataset for discoverability in data searches. (e.g temperature, salinity, maize)
   required: true
-  form_placeholder: input keywords,
+  form_placeholder: Input keywords,
 
 - field_name: spatial
-  label: Geographic location bounding box
+  label: Geographic location or bounding box coordinates
   help_allow_html: true
   required: false
   help_text: >-
@@ -154,22 +154,22 @@ dataset_fields:
   #display_snippet: null
 
 - field_name: data_reference_date
-  label: Data Reference Date
+  label: Data reference date
   required: false
   preset: simple_subfields
   help_text: specify the refernce dates
   repeating_subfields:
       - field_name: data_reference_date_to
-        label: Data Reference Date (to)
+        label: Data reference date (to)
         required: true
         preset: date
       - field_name: data_reference_date_from
         required: true
-        label: Data Reference Date (from)
+        label: Data reference date (from)
         preset: date
 
 - field_name: wro_theme
-  label: Dataset Topic Category 
+  label: Dataset topic category 
   required: true
   preset: select
   choices:
@@ -178,7 +178,7 @@ dataset_fields:
   - value: biodiversity
     label: Biodiversity
   - value: citizen_science
-    label: Citizen Science
+    label: Citizen science
   - value: dam_level
     label: Dam level
   - value: drought
@@ -235,15 +235,15 @@ dataset_fields:
   choices:
   - value: raw
     label: Raw
+  - value: still_being_processed
+    label: Still being processed
   - value: refined
     label: Refined
-  - value: processing
-    label: Processing
   - value: access
     label: Access
 
 - field_name: data_classification
-  label: is the Data Time seriesed or static
+  label: is the data time seriesed or static
   required: true
   preset: radio
   choices:
@@ -251,9 +251,11 @@ dataset_fields:
     label: Time series
   - value: static
     label: Static
+  - value: both
+    label: Both
 
 - field_name: alternative_identifier
-  label: Alternate Identifier
+  label: Alternate identifier
   help_text: Any unique identifier for the metadata/dataset (e.g links to other identifiers, DOI, ISBN. Mandatory for replacement versions of the same data).
   required: false
   form_placeholder: eg. DOI
@@ -265,18 +267,18 @@ dataset_fields:
   form_placeholder:
 
 - field_name: minimum_maximum_extent
-  label: Vertical Minimum-Maximum Extent
-  help_text: specify the vertical minimum and maximum extent
+  label: Vertical minimum-maximum extent
+  help_text: Specify the vertical minimum and maximum extent
   preset: simple_subfields # customized by mohab(a lot to be added)
   required: false
   repeating_subfields:
     - field_name: minimum_vertical_extent
-      label: Minimum Vertical Extent
+      label: Minimum vertical extent
     - field_name: maximum_vertical_extent
-      label: Maximum Vertical Extent
+      label: Maximum vertical extent
 
 - field_name: agreement
-  label: I agree to the Data Management Plan and Term and Conditions of the WRO
+  label: I agree to the data management plan and terms and conditions of the WRO
   required: true
   validators: boolean_validator
   preset: mod_checkbox
@@ -295,7 +297,7 @@ resource_fields:
     form_placeholder: eg. January 2011 Gold Prices
 
   - field_name: description
-    label: Description
+    label: Description of the data
     form_snippet: markdown.html
     form_placeholder: Some useful notes about the data
 
@@ -306,14 +308,14 @@ resource_fields:
     help_text: Name of the data transfer format - This is a SANS 1878 mandatory field
 
   - field_name: is_data_supplementary
-    label: Is Data Supplementary?
+    label: Is data supplementary?
     required: false
     validators: boolean_validator
     preset: mod_checkbox
     choices:
       - value:
         label:
-    help_text: will be considered primary data assets if not specified
+    help_text: Will be considered primary data assets if not specified
 
 
 
