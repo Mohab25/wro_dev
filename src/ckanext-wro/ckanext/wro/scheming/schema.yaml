@@ -39,7 +39,7 @@ dataset_fields:
     - field_name: owner_org
       label: Organization
       required: true
-      preset: dataset_organization
+      preset: organization_mod_preset
       validators: ignore_missing
     - field_name: author_department
       label: Department

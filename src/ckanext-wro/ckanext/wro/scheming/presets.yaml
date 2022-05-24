@@ -24,6 +24,15 @@ presets:
         unicode
       form_snippet: "organization_with_visibility.html"
 
+
+  - preset_name: organization_mod_preset
+    values:
+      validators: >-
+        owner_org_validator
+        unicode
+      form_snippet: "organization_mod.html"
+
+
   # - preset_name: emc_dataset_spatial_extent
   #   values:
   #     form_snippet: "dataset_spatial_extent.html"
