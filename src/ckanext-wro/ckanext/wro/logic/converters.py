@@ -23,8 +23,21 @@ def convert_raw_input_to_geojson(input_text:str)->dict:
         
         if len(values)==2: # a point
             geojson = { "type": "Point", "coordinates": [float(values[0]), float(values[1])]}
-        elif len(values)==4:
-            geojson = { "type": "Polygon", "coordinates": [[values[0], values[1]]]} ## adress this
+
+        elif len(values)==4:  
+            """ goejson has the coords as long, lat and exterior ring going coutner clockwise
+                while holes are clock wise(right hand role). 
+                see the spect https://datatracker.ietf.org/doc/html/rfc7946#section-3.1.1
+                see https://datatracker.ietf.org/doc/html/rfc7946#section-3.1.6
+            """
+            values = [float(i) for i in values]
+            c1 = [values[0],values[1]]
+            c2 = [values[0],values[3]]
+            c3 = [values[2],values[3]]
+            c4 = [values[2],values[1]] 
+            
+            geojson = {"type": "Polygon", "coordinates": [[ c1, c2, c3, c4, c1 ]]}
+        
         else:
             raise toolkit.Invalid("input should either a point or"\
              " a bounding box, please check your input (see help text below)")
@@ -34,22 +47,6 @@ def convert_raw_input_to_geojson(input_text:str)->dict:
             )
     geojson = json.dumps(geojson)
     return geojson
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 # # import logging
