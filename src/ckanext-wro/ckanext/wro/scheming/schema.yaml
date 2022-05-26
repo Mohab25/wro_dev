@@ -149,7 +149,7 @@ dataset_fields:
   required: false
   help_text: >-
     <b>Leave blank if data is not spatial</b>, Expressed as point coordinates or lower-left upper-right bounding box decimal coordinates, e.g. 16.48, -34.97; 32.86, -22.03 for all of South Africa.
-  #preset: emc_dataset_spatial_extent
+  preset: spatial_data_preset
   form_display: map.html
   #display_snippet: null
 

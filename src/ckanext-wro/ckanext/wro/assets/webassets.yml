@@ -16,6 +16,10 @@ scheming-toggle-visibility-js:
   contents:
     - scripts/toggleVisibility.js
 
+spatial-js:
+  filters: rjsmin
+  output: ckanext-wro/%(version)s-wro_spatial.js
+
 # # dataset-spatial-extent-map-css:
 # #   filters: cssrewrite
 # #   output: ckanext-wro/%(version)s-sptial_map.css

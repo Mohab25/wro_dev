@@ -2,10 +2,13 @@ import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
 from ckan.common import config
 from . import helpers
+from .logic import converters
+
 
 class WroPlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IConfigurer)
     plugins.implements(plugins.ITemplateHelpers)
+    plugins.implements(plugins.IValidators)
     #IDatasetForm can be added
     # IConfigurer
 
@@ -20,4 +23,9 @@ class WroPlugin(plugins.SingletonPlugin):
     def get_helpers(self):
         return {
             "default_map_extent":helpers.get_parsed_geojson,
+        }
+
+    def get_validators(self) -> dict:
+        return {
+            "convert_raw_input_to_geojson": converters.convert_raw_input_to_geojson,
         }

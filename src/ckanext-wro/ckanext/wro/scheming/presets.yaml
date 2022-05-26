@@ -33,10 +33,10 @@ presets:
       form_snippet: "organization_mod.html"
 
 
-  # - preset_name: emc_dataset_spatial_extent
-  #   values:
-  #     form_snippet: "dataset_spatial_extent.html"
-  #     validators: emc_bbox_converter
+  - preset_name: spatial_data_preset
+    values:
+      form_snippet: "map.html"
+      validators: convert_raw_input_to_geojson
 
   - preset_name: mod_checkbox
     values:
