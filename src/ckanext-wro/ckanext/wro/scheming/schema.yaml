@@ -296,7 +296,7 @@ resource_fields:
     label: Name
     form_placeholder: eg. January 2011 Gold Prices
 
-  - field_name: description
+  - field_name: dataset_description
     label: Description of the data
     form_snippet: markdown.html
     form_placeholder: Some useful notes about the data
