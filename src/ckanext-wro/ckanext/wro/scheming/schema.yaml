@@ -148,7 +148,7 @@ dataset_fields:
   help_allow_html: true
   required: false
   help_text: >-
-    <b>Leave blank if data is not spatial</b>, Expressed as point coordinates or upper-left lower-right bounding box decimal coordinates (comma separated going with the order long, lat), e.g. -28.97, 16.48, -34.03, 35.86,  for all of South Africa.
+    <b>Leave blank if data is not spatial</b>, Expressed as point coordinates or upper-left lower-right bounding box decimal coordinates (comma separated going with the order lat, long), e.g. -20.629147, 13.165308,-35.2462649, 35.7811468 for all of South Africa.
   preset: spatial_data_preset
   form_display: map.html
   #display_snippet: null

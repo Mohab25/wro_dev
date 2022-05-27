@@ -35,7 +35,6 @@ presets:
 
   - preset_name: spatial_data_preset
     values:
-      form_snippet: "map.html"
       validators: convert_raw_input_to_geojson
 
   - preset_name: mod_checkbox

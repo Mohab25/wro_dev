@@ -22,7 +22,7 @@ def convert_raw_input_to_geojson(input_text:str)->dict:
         values = input_text.split(",")
         
         if len(values)==2: # a point
-            geojson = { "type": "Point", "coordinates": [float(values[0]), float(values[1])]}
+            geojson = { "type": "Point", "coordinates": [float(values[1]), float(values[0])]}
 
         elif len(values)==4:  
             """ goejson has the coords as long, lat and exterior ring going coutner clockwise
@@ -31,10 +31,10 @@ def convert_raw_input_to_geojson(input_text:str)->dict:
                 see https://datatracker.ietf.org/doc/html/rfc7946#section-3.1.6
             """
             values = [float(i) for i in values]
-            c1 = [values[0],values[1]]
-            c2 = [values[0],values[3]]
-            c3 = [values[2],values[3]]
-            c4 = [values[2],values[1]] 
+            c1 = [values[1],values[0]]
+            c2 = [values[3],values[0]]
+            c3 = [values[3],values[2]]
+            c4 = [values[1],values[2]] 
             
             geojson = {"type": "Polygon", "coordinates": [[ c1, c2, c3, c4, c1 ]]}
         
@@ -97,3 +97,4 @@ def convert_raw_input_to_geojson(input_text:str)->dict:
 # #     }
 # #     logger.debug(f"{parsed=}")
 # #     return json.dumps(parsed)
+
