@@ -61,11 +61,3 @@ def _pad_geospatial_extent(extent: typing.Dict, padding: float) -> typing.Dict:
     padded = geom.buffer(padding, join_style=geometry.JOIN_STYLE.mitre)
     oriented_padded = geometry.polygon.orient(padded)
     return geometry.mapping(oriented_padded)
-
-
-def get_parsed_geojson():
-    configured_extent = toolkit.config.get(
-    "default_spatial_search_extent"
-)
-    parsed_extent = json.loads(configured_extent)
-    return json.dumps(parsed_extent)

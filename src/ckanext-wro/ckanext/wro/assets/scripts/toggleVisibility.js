@@ -34,7 +34,6 @@
 ckan.module('ckanext_wro_toggle_repeating_field_visibilty', function($){
   return {
     initialize:function(){
-      console.log('module repeating fields is loaded !')
       $.proxyAll(this,/_on/); 
       //this.sandbox.subscribe('pub', this._onPublish);    // for some reason the pubsub didn't work 
       //let author_checkbox = $('#field-authors-0-contact_same_as_author-None');   // this gave some inconveniences
@@ -63,7 +62,6 @@ ckan.module('ckanext_wro_toggle_repeating_field_visibilty', function($){
     return {
      initialize:function(){
       $.proxyAll(this, /_on/)
-       console.log('data collection loaded !')
        let data_collecton_checkbox = $('#field-did_author_or_contact_organization_collect_the_data')
        data_collecton_checkbox.on('change', this._onChange)
       },

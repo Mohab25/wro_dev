@@ -19,12 +19,8 @@ scheming-toggle-visibility-js:
 spatial-js:
   filters: rjsmin
   output: ckanext-wro/%(version)s-wro_spatial.js
-
-# # dataset-spatial-extent-map-css:
-# #   filters: cssrewrite
-# #   output: ckanext-wro/%(version)s-sptial_map.css
-# #   contents:
-# #     - css/styles.css
+  contents:
+    - scripts/wro_spatial.js
 
 # wro-css:
 #   filters: cssrewrite

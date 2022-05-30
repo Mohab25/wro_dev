@@ -150,7 +150,7 @@ dataset_fields:
   help_text: >-
     <b>Leave blank if data is not spatial</b>, Expressed as point coordinates or upper-left lower-right bounding box decimal coordinates (comma separated going with the order lat, long), e.g. -20.629147, 13.165308,-35.2462649, 35.7811468 for all of South Africa.
   preset: spatial_data_preset
-  form_display: map.html
+  
   #display_snippet: null
 
 - field_name: data_reference_date

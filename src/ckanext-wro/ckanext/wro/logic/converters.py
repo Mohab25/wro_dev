@@ -19,12 +19,13 @@ def convert_raw_input_to_geojson(input_text:str)->dict:
     """
     geojson = None
     try:
+        if input_text == "": # empty input, set default bounding to south africa
+          input_text = "-22.1265, 16.4699, -34.8212, 32.8931"  
         values = input_text.split(",")
-        
         if len(values)==2: # a point
             geojson = { "type": "Point", "coordinates": [float(values[1]), float(values[0])]}
 
-        elif len(values)==4:  
+        elif len(values)==4:
             """ goejson has the coords as long, lat and exterior ring going coutner clockwise
                 while holes are clock wise(right hand role). 
                 see the spect https://datatracker.ietf.org/doc/html/rfc7946#section-3.1.1
@@ -42,7 +43,8 @@ def convert_raw_input_to_geojson(input_text:str)->dict:
             raise toolkit.Invalid("input should either a point or"\
              " a bounding box, please check your input (see help text below)")
     except:
-        raise toolkit.Inavlid("this tool is tested for inputs that are either"\
+        raise RuntimeError(input_text)
+        raise toolkit.Invalid("this tool is tested for inputs that are either "\
                 "points or bounding box, please check your input (see help text below)"
             )
     geojson = json.dumps(geojson)
