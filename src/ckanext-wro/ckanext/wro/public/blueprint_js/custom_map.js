@@ -37,11 +37,10 @@ let map = L.map('map').setView([-29.064594, 24.619973], 5);
             });
 
             map.on('pm:create', (e) => {
-            console.log(bounds)
             map.pm.removeControls(controlOptions)
             //map.pm.toggleControls(controlOptions)      // also an option is just to toggle the visibility of controls not removing them.
             map.pm.addControls(editOnlyControlOptions)
-            window.localStorage.setItem('bounds', bounds);    
+            window.localStorage.setItem('geo_bounds', bounds);    
         });
 
 

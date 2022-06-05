@@ -5,15 +5,14 @@ ckan.module("wro_spatial",function($){
         initialize:function(){
             $.proxyAll(this,/_on/); 
             this.el.on('click', this._onClick)
-            let mapWindow = ""
-            window.localStorage.setItem('bounds', '');  // avoiding a bug with chrome : https://stackoverflow.com/a/58177957/7765766
+            window.localStorage.setItem('geo_bounds', '');  // avoiding a bug with chrome : https://stackoverflow.com/a/58177957/7765766
             window.addEventListener("storage",this._onStorageChange);
         },
         _onClick:function(e){
             mapWindow =  window.open('http://localhost/map');
         },
         _onStorageChange:function(e){
-            $('#field-spatial').val(window.localStorage.getItem("bounds"));
+            $('#field-spatial').val(window.localStorage.getItem("geo_bounds"));
             mapWindow.close()
         }
     }

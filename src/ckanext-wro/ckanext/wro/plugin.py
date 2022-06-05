@@ -2,7 +2,7 @@ import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
 from ckan.common import config
 from . import helpers
-from .logic import converters
+from .logic import converters, validators
 from .blueprints.map import map_blueprint
 
 class WroPlugin(plugins.SingletonPlugin):
@@ -23,6 +23,11 @@ class WroPlugin(plugins.SingletonPlugin):
     def get_validators(self) -> dict:
         return {
             "convert_raw_input_to_geojson": converters.convert_raw_input_to_geojson,
+            "conditional_date_reference_validator": validators.conditional_date_reference_validator,
+            "author_same_as_contact": validators.author_same_as_contact,
+            "agreement": validators.agreement,
+            "author_or_contact_collected_data": validators.author_or_contact_collected_data
+
         }
 
     # IBlueprint

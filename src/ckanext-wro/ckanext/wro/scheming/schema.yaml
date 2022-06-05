@@ -35,7 +35,7 @@ dataset_fields:
       label: Author surname
     - field_name: author_email
       label: Email
-      required: false
+      required: true
     - field_name: owner_org
       label: Organization
       required: true
@@ -61,13 +61,16 @@ dataset_fields:
   repeating_subfields:
     - field_name: contact_name
       label: Contact name
-      required: false
+      required: true
+      preset: contact_same_as_author_preset
     - field_name: contact_email
       label: Email
-      required: false
+      required: true
+      preset: contact_same_as_author_preset
     - field_name: contact_orgnization
       label: Organization
-      required: false
+      required: true
+      preset: contact_same_as_author_preset
     - field_name: contact_department
       label: Department
       required: false
@@ -88,12 +91,10 @@ dataset_fields:
     - value:
       label:
 
-
 - field_name: data_collection_organization
   label: Name of organization collected the data
-  required: false
+  required: true
   preset: data_collection_text_preset
-
 
 - field_name: dataset_language
   label: Dataset language
@@ -162,15 +163,15 @@ dataset_fields:
       - field_name: data_reference_date_to
         label: Data reference date (to)
         required: true
-        preset: date
+        preset: conditional_required_reference_date
       - field_name: data_reference_date_from
         required: true
         label: Data reference date (from)
-        preset: date
+        preset: conditional_required_reference_date
 
 - field_name: wro_theme
   label: Dataset topic category 
-  required: true
+  required: false
   preset: select
   choices:
   - value: agriculture
@@ -245,7 +246,7 @@ dataset_fields:
 - field_name: data_classification
   label: is the data time seriesed or static
   required: true
-  preset: radio
+  preset: data_classification_preset
   choices:
   - value: time series
     label: Time series
@@ -280,8 +281,8 @@ dataset_fields:
 - field_name: agreement
   label: I agree to the data management plan and terms and conditions of the WRO
   required: true
-  validators: boolean_validator
-  preset: mod_checkbox
+#  validators: boolean_validator
+  preset: agreement
   choices:
     - value:
       label:
@@ -323,7 +324,7 @@ resource_fields:
 
 # - field_name: metadata_available
 #   label: Metadata available
-#   required: true
+#   required: false
 #   choices:
 #   - value: "yes"
 #     label: "yes"
@@ -357,7 +358,7 @@ resource_fields:
 
 # - field_name: data_availability
 #   label: Data availablility
-#   required: true
+#   required: false
 #   preset: select
 #   choices:
 #   - value: internal data
@@ -379,7 +380,7 @@ resource_fields:
 #   repeating_subfields:
 #   - field_name: address
 #     label: Address
-#     required: true
+#     required: false
 #   - field_name: city
 #     label: City
 #   - field_name: state
@@ -405,7 +406,7 @@ resource_fields:
 # - field_name: resource_type
 #   label: Resource Type
 #   help_text: specify the resource type
-#   required: true
+#   required: false
 #   preset: select
 #   choices:
 #   - value: dataset
@@ -437,7 +438,7 @@ resource_fields:
 
 # - field_name: upload_requirements
 #   label: Upload requirements
-#   required: true
+#   required: false
 #   preset: select
 #   choices:
 #   - value: static
@@ -452,7 +453,7 @@ resource_fields:
 
 # - field_name: zone
 #   label: Zone
-#   required: true
+#   required: false
 #   help_text: Best estimated by data uploader based on extent or pre-processing
 #   preset: select
 #   choices:
@@ -468,14 +469,14 @@ resource_fields:
 # - field_name: owner_org
 #   label: Institution
 #   help_text: input your institution
-#   required: true
+#   required: false
 #   form_placeholder: Your institution
   #preset: emc_dataset_organization
   # the field name owner_org is required by ckanex-scheming
 
     # preset: multiple_text
     # form_blanks: 1
-    # required: true
+    # required: false
 
 # - field_name: contact_same_as_creator
 #   label: is the contact person for this dataset is the author(s)
@@ -486,7 +487,7 @@ resource_fields:
 # - field_name: owner_org
 #   label: Institution
 #   help_text: input your institution
-#   required: true
+#   required: false
 #   form_placeholder: Your institution
 #   validators: ignore_missing
 #   preset: dataset_organization
