@@ -38,8 +38,10 @@ class ResourceCloudStorage():
         self.resource = resource
         upload_field_storage = resource.pop('upload', None)
         self._clear = resource.pop('clear_upload', None)
-        ## mohab 
-        self.is_resource_link = self.resource['is_link']
+        try: 
+            self.is_resource_link = self.resource['is_link']
+        except KeyError:
+            self.is_resource_link = False
         # Check to see if a file has been provided
         if isinstance(upload_field_storage, (ALLOWED_UPLOAD_TYPES)):
             self.filename = munge.munge_filename(upload_field_storage.filename)

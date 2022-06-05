@@ -306,6 +306,7 @@ resource_fields:
     label: Format
     required: true
     preset: resource_format_autocomplete
+    #validators: not_empty (cause an error, the resource page keeps reloading without submission)
     help_text: Name of the data transfer format - This is a SANS 1878 mandatory field
 
   - field_name: is_data_supplementary
