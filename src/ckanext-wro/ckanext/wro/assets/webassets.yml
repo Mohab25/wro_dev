@@ -7,14 +7,14 @@ dataset-spatial-extent-map-js:
     preload:
       - base/main
 
-scheming-toggle-visibility-js:
+metadata-scheming-scripts-js:
   filters: rjsmin
   output: ckanext-wro/%(version)s-wro.js
   extra:
     preload:
       - base/main
   contents:
-    - scripts/toggleVisibility.js
+    - scripts/schemingScripts.js
 
 spatial-js:
   filters: rjsmin

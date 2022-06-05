@@ -21,6 +21,8 @@ presets:
     values:
       validators: author_same_as_contact
       form_snippet: "text.html"
+      form_attrs:
+        data-module: ckanext_wro_title_field_word_count
 
 
   - preset_name: organization_mod_preset
@@ -65,7 +67,7 @@ presets:
     values:
       form_snippet: "mod_radio.html"
       # form_attrs:
-      #   data-module: "ckanext_wro_toggle_data_collection_field"  # adding this didn't work
+      #   data-module: ckanext_wro_toggle_data_collection_field
 
   - preset_name: agreement
     values:

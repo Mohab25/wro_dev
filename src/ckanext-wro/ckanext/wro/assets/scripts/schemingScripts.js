@@ -72,7 +72,8 @@ ckan.module('ckanext_wro_toggle_repeating_field_visibilty', function($){
 
 
  ckan.module('ckanext_wro_toggle_data_collection_field',function($){
-   /**
+   /*  ===================== Module Documentation
+
     toogle the visibility of one input "Name of organization collected the data" if a checkbox 
     "did author / contact orgnization collect the data" is checked,
     
@@ -84,7 +85,7 @@ ckan.module('ckanext_wro_toggle_repeating_field_visibilty', function($){
     _onChange: callback function with the checkbox "change" event, it toggles the visibility of 
                "Name of organization collected the data" input field.
 
-
+    =====================
 
     */
     return {
@@ -107,6 +108,75 @@ ckan.module('ckanext_wro_toggle_repeating_field_visibilty', function($){
       }
   }
  });
+
+ckan.module('ckanext_wro_title_field_word_count',function($){
+  /*
+    ================= Module Documentation
+  
+    displays how many words the users used with the title
+    (the title is limited to 100 words)
+
+    =================
+  */
+
+  return {
+    initialize:function(){
+      $.proxyAll(this, /_on/)
+      let title_input = $('#field-title')  
+      
+      title_input.on('input',this._onChange)
+    },
+
+    _onChange:function(e){
+      let title_label = $('label[for="field-title')
+      text = `Dataset title (${e.target.value.length}/100 maximum characters)`
+      title_label.text(text)
+    },
+
+  }
+
+  
+
+
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //  ckan.module("ckanext_toggle_date_reference",function($){
 //     return{
