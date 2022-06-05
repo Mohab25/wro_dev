@@ -30,7 +30,7 @@ ckan.module('ckanext_wro_toggle_repeating_field_visibilty', function($){
 
     },
     _onAlternatePublish:function(e){
-      contact_fields = $(".getter_contact_person")   // didn't use this.el because there are muliple fields with the same config
+      contact_fields = $(".contact_person_getter")   // didn't use this.el because there are muliple fields with the same config
       contact_fields_label = $('label[for="field-contact_person"]')
       if(e.target.checked){
         contact_fields.hide();
@@ -43,15 +43,21 @@ ckan.module('ckanext_wro_toggle_repeating_field_visibilty', function($){
     },
     _onChange:function(e){
       let spans = this.el.find('.control-required')
+      reference_date = $('.data_reference_date_getter')
+      reference_date_label = $('label[for="field-data_reference_date"]')
+      
       if(e.target.value == 'static'){ 
-      spans.each((index, el)=>{
-          el.style.visibility = 'hidden'
-        })}
+      // kepping this span for inspiration
+      spans.each((index, el)=>{ el.style.visibility = 'hidden' })
+      reference_date.hide()
+      reference_date_label.hide()
+      }
      else {
-       spans.each((index, el)=>{
-        el.style.visibility = 'visible'
-      })
-     }
+       reference_date.show()
+       reference_date_label.show()
+       // kepping this for inspiration
+       spans.each((index, el)=>{ el.style.visibility = 'visible'}) 
+      }
 
     },
 

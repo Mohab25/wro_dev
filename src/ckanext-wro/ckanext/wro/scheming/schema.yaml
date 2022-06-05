@@ -154,21 +154,6 @@ dataset_fields:
   
   #display_snippet: null
 
-- field_name: data_reference_date
-  label: Data reference date
-  required: false
-  preset: simple_subfields
-  help_text: specify the refernce dates
-  repeating_subfields:
-      - field_name: data_reference_date_to
-        label: Data reference date (to)
-        required: true
-        preset: conditional_required_reference_date
-      - field_name: data_reference_date_from
-        required: true
-        label: Data reference date (from)
-        preset: conditional_required_reference_date
-
 - field_name: wro_theme
   label: Dataset topic category 
   required: false
@@ -254,6 +239,21 @@ dataset_fields:
     label: Static
   - value: both
     label: Both
+
+- field_name: data_reference_date
+  label: Data reference date
+  required: false
+  preset: simple_subfields
+  help_text: specify the refernce dates
+  repeating_subfields:
+      - field_name: data_reference_date_to
+        label: Data reference date (to)
+        required: true
+        preset: conditional_required_reference_date
+      - field_name: data_reference_date_from
+        required: true
+        label: Data reference date (from)
+        preset: conditional_required_reference_date
 
 - field_name: alternative_identifier
   label: Alternate identifier

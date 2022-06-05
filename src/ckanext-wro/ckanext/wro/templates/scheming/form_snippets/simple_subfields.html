@@ -5,7 +5,7 @@
 
 {% macro repeating_panel(index, index1) %}
 <!--<div class="scheming-subfield-group" data-field="{{ field.field_name }}" data-group-index="{{ index }}"> -->
-  <div class="scheming-subfield-group">
+  <div class="scheming-subfield-group {{ field.field_name }}_getter">
     <div class="panel panel-default">
       <!--<header class="panel-heading">
         {% block field_removal_button%}
@@ -79,7 +79,7 @@
     -->
 	  {% set help_text = h.scheming_language_text(field.help_text) %}
 	  {% if help_text %}
-	    <div class="info-block mrgn-tp-md">
+	    <div class="info-block mrgn-tp-md {{ field.field_name }}_getter">
 	      <i class="fa fa-info-circle"></i> {{ help_text }}
 	    </div>
 	  {% endif %}
