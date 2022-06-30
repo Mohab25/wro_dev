@@ -19,7 +19,7 @@ dataset_fields:
 
 - field_name: name
   label: Dateset metadata URL
-  form_placeholder: http://example.com/dataset.json
+  form_placeholder: /metadata-form/dataset_title
   preset: dataset_slug
   display_snippet: link.html
 
@@ -246,13 +246,13 @@ dataset_fields:
   preset: simple_subfields
   help_text: specify the refernce dates
   repeating_subfields:
-      - field_name: data_reference_date_to
-        label: Data reference date (to)
+      - field_name: data_reference_date_from
+        label: Data reference date (from)
         required: true
         preset: conditional_required_reference_date
-      - field_name: data_reference_date_from
+      - field_name: data_reference_date_to
         required: true
-        label: Data reference date (from)
+        label: Data reference date (to)
         preset: conditional_required_reference_date
 
 - field_name: alternative_identifier

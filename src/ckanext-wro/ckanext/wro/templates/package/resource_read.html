@@ -1,0 +1,54 @@
+{% ckan_extends %}
+<!-- {% ckan_extends %}
+{% block resource_view_content %}
+<div class="resource-view">
+  {% set resource_preview = h.resource_preview(resource, package) %}
+  {% set views_created = res.has_views or resource_preview %}
+  {% if views_created %}
+    {% if resource_preview and not current_resource_view %}
+      {{ h.resource_preview(resource, package) }}
+    {% else %}
+      {% for resource_view in resource_views %}
+        {% if resource_view == current_resource_view %}
+          {% snippet 'package/snippets/resource_view.html',
+             resource_view=resource_view,
+             resource=resource,
+             package=package
+           %}
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+  {% else %}
+
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css" integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ==" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js" integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ==" crossorigin=""></script>
+        <div data-module="geo_data_preview" id="map"> </div>
+    </div>
+  {% endif %}
+</div>
+{% endblock %} -->
+
+
+
+<!--   this is what comes with the resource_read.html, i need to use some of this logic 
+{# Views not created #}
+<div class="data-viewer-info">
+  <p>{{ _("There are no views created for this resource yet.") }}</p>
+  {% if h.check_access('resource_view_create', {'resource_id': resource.id}) %}
+    <p class="text-muted">
+      <i class="fa fa-info-circle"></i>
+      {{ _("Not seeing the views you were expecting?")}}
+      <a href="javascript:void(0);" data-toggle="collapse" data-target="#data-view-info">
+        {{ _('Click here for more information.') }}</a>
+    </p>
+    <div id="data-view-info" class="collapse">
+      <p>{{ _('Here are some reasons you may not be seeing expected views:') }}</p>
+      <ul>
+        <li>{{ _("No view has been created that is suitable for this resource")}}</li>
+        <li>{{ _("The site administrators may not have enabled the relevant view plugins")}}</li>
+        <li>{{ _("If a view requires the DataStore, the DataStore plugin may not be enabled, or the data may not have been pushed to the DataStore, or the DataStore hasn't finished processing the data yet")}}</li>
+      </ul>
+    </div> 
+    {% endif %}
+
+-->

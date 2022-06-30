@@ -12,21 +12,50 @@
  */
 
  "use-strict";
+
+
+// DRY function
+ // previously checked from the same sessoin, did something go wrong with the submission? saves and retrieve the results
+let isCheckboxPreviouslySet = function(checkbox_session_name,checkbox_element, hide_element=null){
+  $(document).ready(function(e){
+    let checkedPreviously = sessionStorage.getItem(checkbox_session_name)
+    if (checkedPreviously != null){
+      let previously_checked_bool = "true" === checkedPreviously // convert string to boolean in js, Bool always returns true if value is not null
+      
+      checkbox_element.prop("checked", previously_checked_bool)
+      checkbox_element.value = checkedPreviously
+    
+      if(hide_element != null){
+        if(previously_checked_bool == true){ 
+          for (let item of hide_element){item.hide()}
+        }
+        
+          else{
+            for (let item of hide_element){item.show()}
+          }
+      }
+    }
+
+  })
+
+
+}
  
+
 ckan.module('ckanext_wro_toggle_repeating_field_visibilty', function($){
   return {
     initialize:function(){
       $.proxyAll(this,/_on/); 
       //this.sandbox.subscribe('pub', this._onPublish);    // for some reason the pubsub didn't work 
       //let author_checkbox = $('#field-authors-0-contact_same_as_author-None');   // this gave some inconveniences
-      let author_checkbox = $('#field-authors-0-contact_same_as_author')
-      author_checkbox.on('change',this._onAlternatePublish)
+      let author_checkbox = $('#field-authors-0-contact_same_as_author');
+      author_checkbox.on('change',this._onAlternatePublish);
+      isCheckboxPreviouslySet("contactPerson_check", author_checkbox, [$('label[for="field-contact_person"]'),$(".contact_person_getter")])
+
 
       // change the required (*) required element visibility
-      let data_classification_fieldset = $("#data_classification-field_set")
-      data_classification_fieldset.change(this._onChange)
-
-      $('#field-authors-0-contact_same_as_author').change(this._onCheckChange)
+      let data_classification_fieldset = $("#data_classification-field_set");
+      data_classification_fieldset.change(this._onChange);
 
     },
     _onAlternatePublish:function(e){
@@ -40,6 +69,8 @@ ckan.module('ckanext_wro_toggle_repeating_field_visibilty', function($){
         contact_fields.show();
         contact_fields_label.show();
       }
+      e.target.value = e.target.checked.toString()
+      sessionStorage.setItem("contactPerson_check", e.target.checked)
     },
     _onChange:function(e){
       let spans = this.el.find('.control-required')
@@ -60,12 +91,6 @@ ckan.module('ckanext_wro_toggle_repeating_field_visibilty', function($){
       }
 
     },
-
-    _onCheckChange:function(e){
-      e.target.value = e.target.checked
-      console.log(e.target.checked)
-      console.log(e.target.value)
-    }
   
   }
 });
@@ -93,7 +118,10 @@ ckan.module('ckanext_wro_toggle_repeating_field_visibilty', function($){
       $.proxyAll(this, /_on/)
        let data_collecton_checkbox = $('#field-did_author_or_contact_organization_collect_the_data')
        data_collecton_checkbox.on('change', this._onChange)
+       isCheckboxPreviouslySet("dataCollection_check", data_collecton_checkbox, [$('label[for="field-data_collection_organization'), this.el])
+
       },
+
       _onChange:function(e){
         data_collector_field_label = $('label[for="field-data_collection_organization')
         if(e.target.checked){
@@ -105,6 +133,9 @@ ckan.module('ckanext_wro_toggle_repeating_field_visibilty', function($){
           this.el.show();
           data_collector_field_label.show();
         }
+        e.target.value = e.target.checked.toString()
+        sessionStorage.setItem("dataCollection_check", e.target.checked)
+      
       }
   }
  });
@@ -123,26 +154,42 @@ ckan.module('ckanext_wro_title_field_word_count',function($){
     initialize:function(){
       $.proxyAll(this, /_on/)
       let title_input = $('#field-title')  
-      
       title_input.on('input',this._onChange)
     },
 
     _onChange:function(e){
       let title_label = $('label[for="field-title')
-      text = `Dataset title (${e.target.value.length}/100 maximum characters)`
+      text = "Dataset title (" + e.target.value.length + "/100 maximum characters"
+      //text = `Dataset title (${e.target.value.length}/100 maximum characters)`
       title_label.text(text)
     },
 
   }
 
-  
-
-
 })
 
-
-
-
+ckan.module('ckanext_wro_checkboxs_handler',function($){
+  // this is an anti pattern, but this module is attahced
+  // to organization_mod.html instead of creating a new 
+  // html page for the agreement checkbox, fix this in 
+  // future.
+  return{
+    initialize:function(){
+      $.proxyAll(this, /_on/)
+      let agreement_checkbox = $('#field-agreement')  
+      agreement_checkbox.on("change", this._onAgreementChange)
+      
+      // previously checked from the same sessoin, did something go wrong with the submission? saves and retrieve the results
+      
+      isCheckboxPreviouslySet("agreement_check", agreement_checkbox)
+      
+    },
+    _onAgreementChange:function(e){
+        sessionStorage.setItem("agreement_check", e.target.checked)
+        e.target.value = e.target.checked.toString()
+    }
+  }
+})
 
 
 

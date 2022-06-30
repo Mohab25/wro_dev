@@ -16,13 +16,16 @@ def conditional_date_reference_validator(key, flattened_data, errors, context):
     """
     logger.debug('======================== iniside validator' , flattened_data)
     missing_str = "missing value, set data classification to static if there is no time frame"
+    from_date_value = flattened_data[('data_reference_date', 0, 'data_reference_date_from')]
+    to_date_value = flattened_data[('data_reference_date', 0, 'data_reference_date_to')] 
+    
     try:
         data_classification = flattened_data[('data_classification',)]
         if data_classification == "static":
             return ignore_missing(key, flattened_data, errors, context)
-        else:
+        elif from_date_value == "" or to_date_value == "":
             raise toolkit.Invalid(missing_str)
-
+            
     except KeyError:
         raise toolkit.Invalid(missing_str)
 

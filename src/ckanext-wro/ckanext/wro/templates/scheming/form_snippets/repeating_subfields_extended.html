@@ -2,7 +2,7 @@
 {% include 'scheming/snippets/subfields_asset.html' %}
 {% import 'macros/form.html' as form %}
 {% macro repeating_panel(index, index1) %}
-  <div class="scheming-subfield-group {{ field.field_name }}_getter" data-field="{{ field.field_name }}" data-group-index="{{ index }}" >
+  <div class="scheming-subfield-group {{ field.field_name }}_getter" data-field="{{ field.field_name }}" data-group-index="{{ index }}" data-module="this is the author module">
     <div class="panel panel-default">
       <header class="panel-heading">
         {% block field_removal_button%}

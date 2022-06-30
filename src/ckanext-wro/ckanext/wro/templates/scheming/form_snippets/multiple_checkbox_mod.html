@@ -13,4 +13,6 @@
     is_required=h.scheming_field_required(field)
 ) %}
     {%- snippet 'scheming/form_snippets/help_text.html', field=field -%}
+    <div style="display: none;" data-module="ckanext_wro_checkboxs_handler"></div>
+    <div style="display: none;" data-module="ckanext_wro_toggle_repeating_field_visibilty"></div>
 {% endcall %}
