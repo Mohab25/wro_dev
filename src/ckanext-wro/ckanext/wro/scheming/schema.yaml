@@ -6,7 +6,7 @@ dataset_fields:
 
 - field_name: email
   label: Email
-  help_text: input your emial address
+  help_text: Input your Email address
   required: true
   form_placeholder: Your email address
 
@@ -14,7 +14,7 @@ dataset_fields:
   label: Dataset title (maximum 100 characters)
   preset: title
   required: true
-  form_placeholder: eg. A descriptive title
+  form_placeholder: e.g. A descriptive title
   form_snippet: title.html
 
 - field_name: name
@@ -55,7 +55,7 @@ dataset_fields:
 
 - field_name: contact_person
   label: Contact person
-  help_text: leave blank if it the same as the author
+  help_text: Leave blank if it the same as the author
   required: false
   preset: repeated_subfields_extended
   repeating_subfields:
@@ -92,7 +92,7 @@ dataset_fields:
       label:
 
 - field_name: data_collection_organization
-  label: Name of organization collected the data
+  label: Name of organization that collected the data
   required: true
   preset: data_collection_text_preset
 
@@ -100,7 +100,7 @@ dataset_fields:
   label: Dataset language
   help_text: Assumed English if not provided
   required: false
-  form_placeholder: Dataset language.
+  form_placeholder: Dataset language
 
 - field_name: publisher
   label: Publisher
@@ -121,7 +121,7 @@ dataset_fields:
 
 - field_name: license
   label: License
-  help_text: for creative commons license please visit https://creativecommons.org/
+  help_text: For creative commons license please visit https://creativecommons.org/
   required: true
   preset: select
   choices:
@@ -134,22 +134,22 @@ dataset_fields:
 
 - field_name: dataset_license_url
   label: License URL
-  help_text: specify the license url
+  help_text: Specify the license url
   required: false
   form_placeholder: http://creativecommons.org/
 
 - field_name: keywords
   label: Keywords
-  help_text: Keywords are used to tag/describe the dataset for discoverability in data searches. (e.g temperature, salinity, maize)
+  help_text: Keywords are used to tag/describe the dataset for discoverability in data searches (e.g. temperature, salinity, maize)
   required: true
-  form_placeholder: Input keywords,
+  form_placeholder: Input keywords
 
 - field_name: spatial
   label: Geographic location or bounding box coordinates
   help_allow_html: true
   required: false
   help_text: >-
-    <b>Leave blank if data is not spatial</b>, Expressed as point coordinates or upper-left lower-right bounding box decimal coordinates (comma separated going with the order lat, long), e.g. -20.629147, 13.165308,-35.2462649, 35.7811468 for all of South Africa.
+    <b>Leave blank if data is not spatial</b>, expressed as point coordinates or upper-left lower-right bounding box decimal coordinates (comma separated going with the order lat, long), e.g. -20.629147, 13.165308,-35.2462649, 35.7811468 for all of South Africa.
   preset: spatial_data_preset
   
   #display_snippet: null
@@ -229,7 +229,7 @@ dataset_fields:
     label: Access
 
 - field_name: data_classification
-  label: is the data time seriesed or static
+  label: Is the data time seriesed or static
   required: true
   preset: data_classification_preset
   choices:
@@ -257,9 +257,9 @@ dataset_fields:
 
 - field_name: alternative_identifier
   label: Alternate identifier
-  help_text: Any unique identifier for the metadata/dataset (e.g links to other identifiers, DOI, ISBN. Mandatory for replacement versions of the same data).
+  help_text: Any unique identifier for the metadata/dataset (e.g. links to other identifiers, DOI, ISBN. Mandatory for replacement versions of the same data).
   required: false
-  form_placeholder: eg. DOI
+  form_placeholder: e.g. DOI
 
 - field_name: vertical_extent_datum
   label: Vertical extent datum
