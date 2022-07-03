@@ -1,51 +1,56 @@
-let map = L.map('map').setView([-29.064594, 24.619973], 5);
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map)
-
-            // // fontawesome icons with leaflet  
-            // let marcadorEscuelas = L.AwesomeMarkers.icon({
-            //     icon: "fa-university",
-            //     prefix: "fa",
-            //     markerColor: "red",
-            //     iconColor: "white",
-            // });
-
-            // L.marker([-34.36526053977009, 18.471965789794925], {icon: marcadorEscuelas}).addTo(map).bindPopup("that one who called binga")
-
-            let controlOptions = {  
-            position: 'topleft',
-            drawCircleMarker:false,  
-            drawCircle: false,
-            drawPolyline: false,
-            drawPolygon: false,
-            drawText: false, 
-            cutPolygon: false,
-            rotateMode: false,
-
-            }
-
-            let editOnlyControlOptions = JSON.parse(JSON.stringify(controlOptions))
-            editOnlyControlOptions.drawRectangle = false
-            editOnlyControlOptions.drawMarker = false
+const map_container = document.getElementById("map")
+const initMap = function(){const map = new google.maps.Map(map_container, {
+    zoom:5,
+    center:{lat: -29.064594, lng: 24.619973}
+})
 
 
-            map.pm.addControls(controlOptions);  
+const drawManager = new google.maps.drawing.DrawingManager({
+    drawingMode: google.maps.drawing.OverlayType.MARKER,
+    drawingControl: true,
+    drawingControlOptions: {
+        position: google.maps.ControlPosition.LEFT_CENTER,
+        drawingModes:[
+            google.maps.drawing.OverlayType.RECTANGLE,
+            google.maps.drawing.OverlayType.MARKER,
+            
+        ]
+    }, 
+    markerOptions: {
+        icon: "https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png",
+      },
+    rectangleOptions:{
+        editable: true,
+        draggable: true,
+        strokeColor: "#4682b4"
+    },
+})
 
-            let bounds = [] 
+drawManager.setMap(map); 
 
-            map.on('click', function(e) {
-            bounds.push([e.latlng.lat, e.latlng.lng])
-            });
+google.maps.event.addListener(drawManager, 'overlaycomplete', function(event) {
+    if (event.type == 'rectangle') {
+          let north_east = event.overlay.getBounds().getNorthEast().toJSON()
+          let north_east_list = [north_east.lat, north_east.lng]
+          let south_west = event.overlay.getBounds().getSouthWest().toJSON()
+          let south_west_list = [south_west.lat, south_west.lng]
+          let north_west = [north_east_list[0], south_west_list[1]]
+          let south_east = [south_west_list[0], north_east_list[1]]
+        
+          let bounds = [...north_west, ...south_east] 
+        
+          window.localStorage.setItem('geo_bounds', bounds);
+    }
 
-            map.on('pm:create', (e) => {
-            map.pm.removeControls(controlOptions)
-            //map.pm.toggleControls(controlOptions)      // also an option is just to toggle the visibility of controls not removing them.
-            map.pm.addControls(editOnlyControlOptions)
-            window.localStorage.setItem('geo_bounds', bounds);    
-        });
+    else if(event.type == 'marker'){
+        let position = event.overlay.getPosition()?.toJSON()
+        let bounds = [position.lat, position.lng]
+        console.log(bounds)
+        window.localStorage.setItem('geo_bounds', bounds);
+    }
 
+  });
 
-            map.on('pm:remove', e=>{
-            map.pm.removeControls(editOnlyControlOptions)
-            // this doesn't show up, needs handling ========================
-            map.addControls(controlOptions)
-            })
+}
+
+window.initMap = initMap

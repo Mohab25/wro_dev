@@ -36,7 +36,7 @@ def convert_raw_input_to_geojson(input_text:str)->dict:
     values = input_text.split(",")
     if len(values)==2: # a point
         geojson = { "type": "Point", "coordinates": [float(values[1]), float(values[0])]}
-
+        return json.dumps(geojson)
     elif len(values)==4:
         """ goejson has the coords as long, lat and exterior ring going coutner clockwise
             while holes are clock wise(right hand role). 
