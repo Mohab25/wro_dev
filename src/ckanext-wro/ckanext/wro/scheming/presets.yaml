@@ -37,6 +37,7 @@ presets:
     values:
       validators: convert_raw_input_to_geojson
       form_snippet: "map.html"
+      display_snippet: null
 
   - preset_name: mod_checkbox
     values:
@@ -60,6 +61,7 @@ presets:
     values:
       validators: author_or_contact_collected_data
       form_snippet: "text.html"
+      display_snippet: "text_mod.html"
       form_attrs:
         data-module: "ckanext_wro_toggle_data_collection_field"
 

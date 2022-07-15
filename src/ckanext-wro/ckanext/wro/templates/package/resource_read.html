@@ -1,5 +1,5 @@
 <!-- {% ckan_extends %} -->
-{% ckan_extends %}
+
 {% block resource_view_content %}
 <div class="resource-view">
   {% set resource_preview = h.resource_preview(resource, package) %}
@@ -30,7 +30,8 @@
 
 
 
-<!--   this is what comes with the resource_read.html, i need to use some of this logic 
+<!--   this is what comes with the resource_read.html, i need to use some of this logic later
+  
 {# Views not created #}
 <div class="data-viewer-info">
   <p>{{ _("There are no views created for this resource yet.") }}</p>

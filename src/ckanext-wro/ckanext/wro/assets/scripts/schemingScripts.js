@@ -14,10 +14,17 @@
  "use-strict";
 
 
+// ===================================
 // DRY function
- // previously checked from the same sessoin, did something go wrong with the submission? saves and retrieve the results
+// previously checked from the same sessoin, did something go wrong with the submission? saves and retrieve the results
+
 let isCheckboxPreviouslySet = function(checkbox_session_name,checkbox_element, hide_element=null){
   $(document).ready(function(e){
+
+    /* use the session after a submittion failure
+      to save the user from re-inputing
+    */
+
     let checkedPreviously = sessionStorage.getItem(checkbox_session_name)
     if (checkedPreviously != null){
       let previously_checked_bool = "true" === checkedPreviously // convert string to boolean in js, Bool always returns true if value is not null
@@ -25,42 +32,83 @@ let isCheckboxPreviouslySet = function(checkbox_session_name,checkbox_element, h
       checkbox_element.prop("checked", previously_checked_bool)
       checkbox_element.value = checkedPreviously
     
-      if(hide_element != null){
-        if(previously_checked_bool == true){ 
-          for (let item of hide_element){item.hide()}
-        }
-        
-          else{
-            for (let item of hide_element){item.show()}
-          }
-      }
     }
 
   })
 
 
 }
- 
+
+/*
+  also you need to query the database to check if this is an update or a new 
+  submission, if it's an update, i need the values from there first.
+*/
+
+let edit_session_submitted_previously = function(checkbox_element){
+  // is there any previous value?
+  return checkbox_element.is(":checked")
+
+}
+
+// hide elements according to whether
+// the checkbox is check
+
+let hide_conditionally = function(hide_element,previously_checked_bool ){
+  if(hide_element != null){
+    if(previously_checked_bool == true){ 
+      for (let item of hide_element){item.hide()}
+    }
+    
+      else{
+        for (let item of hide_element){item.show()}
+      }
+  }
+}
+
+// ===================================
+
+/*
+  sets the checkbox for author same as contact and 
+  date reference fields.
+
+  called from:
+  ---------
+  1. templates/scheming/multiple_checkbox_mod: this is the first call.
+  2. templates/package/edit.html: to get the pkg_dict when the form is edited
+   
+
+*/
 
 ckan.module('ckanext_wro_toggle_repeating_field_visibilty', function($){
+  let author_checkbox = $('#field-authors-0-contact_same_as_author');
+  let data_classification_fieldset = $("#data_classification-field_set");
+  let contact_fields = $(".contact_person_getter")
+  let contact_fields_label = $('label[for="field-contact_person"]')
+
   return {
     initialize:function(){
       $.proxyAll(this,/_on/); 
-      //this.sandbox.subscribe('pub', this._onPublish);    // for some reason the pubsub didn't work 
-      //let author_checkbox = $('#field-authors-0-contact_same_as_author-None');   // this gave some inconveniences
-      let author_checkbox = $('#field-authors-0-contact_same_as_author');
+      // for some reason the pubsub didn't work
+      //this.sandbox.subscribe('pub', this._onPublish);
+
+      if(this.options.author_contact_collected_data == true){
+        // this for the edit page.
+        author_checkbox.prop("checked", true)
+        author_checkbox.val(true)
+        contact_fields.hide();
+        contact_fields_label.hide();
+      }
+      
       author_checkbox.on('change',this._onAlternatePublish);
-      isCheckboxPreviouslySet("contactPerson_check", author_checkbox, [$('label[for="field-contact_person"]'),$(".contact_person_getter")])
-
-
+            
       // change the required (*) required element visibility
-      let data_classification_fieldset = $("#data_classification-field_set");
+      // handles the classification
       data_classification_fieldset.change(this._onChange);
 
     },
     _onAlternatePublish:function(e){
-      contact_fields = $(".contact_person_getter")   // didn't use this.el because there are muliple fields with the same config
-      contact_fields_label = $('label[for="field-contact_person"]')
+      // didn't use this.el because there are muliple fields with the same config
+      
       if(e.target.checked){
         contact_fields.hide();
         contact_fields_label.hide();
@@ -96,7 +144,6 @@ ckan.module('ckanext_wro_toggle_repeating_field_visibilty', function($){
 });
 
 
- ckan.module('ckanext_wro_toggle_data_collection_field',function($){
    /*  ===================== Module Documentation
 
     toogle the visibility of one input "Name of organization collected the data" if a checkbox 
@@ -110,20 +157,38 @@ ckan.module('ckanext_wro_toggle_repeating_field_visibilty', function($){
     _onChange: callback function with the checkbox "change" event, it toggles the visibility of 
                "Name of organization collected the data" input field.
 
-    =====================
+  called from:
+  ---------
+  1. 
+  2. templates/package/edit.html: to get the pkg_dict when the form is edited
+    
+  
+  */
 
-    */
+
+ ckan.module('ckanext_wro_toggle_data_collection_field',function($){
+    let data_collecton_checkbox = $('#field-did_author_or_contact_organization_collect_the_data')
+    let data_collector_field_label = $('label[for="field-data_collection_organization')
+    let data_collection_org = $('#field-data_collection_organization')
     return {
      initialize:function(){
       $.proxyAll(this, /_on/)
-       let data_collecton_checkbox = $('#field-did_author_or_contact_organization_collect_the_data')
+      console.log(this.options)
+      if(this.options.author_contact_collected_data == true){
+        data_collecton_checkbox.prop("checked", true)
+        data_collecton_checkbox.val(true)
+        data_collection_org.hide();
+        data_collection_org.required = false
+        data_collector_field_label.hide()
+      }
        data_collecton_checkbox.on('change', this._onChange)
-       isCheckboxPreviouslySet("dataCollection_check", data_collecton_checkbox, [$('label[for="field-data_collection_organization'), this.el])
+
+       //isCheckboxPreviouslySet("dataCollection_check", data_collecton_checkbox, [$('label[for="field-data_collection_organization'), this.el])
 
       },
 
       _onChange:function(e){
-        data_collector_field_label = $('label[for="field-data_collection_organization')
+        
         if(e.target.checked){
           this.el.hide();
           this.el.required = false
@@ -168,20 +233,36 @@ ckan.module('ckanext_wro_title_field_word_count',function($){
 
 })
 
+/*
+===================== handles the agreement checkbox
+
+
+  called from:
+  ---------
+  1. 
+  2. templates/package/edit.html: to get the pkg_dict when the form is edited
+*/
+
+
 ckan.module('ckanext_wro_checkboxs_handler',function($){
-  // this is an anti pattern, but this module is attahced
-  // to organization_mod.html instead of creating a new 
-  // html page for the agreement checkbox, fix this in 
-  // future.
+  // handle the agreement checkbox. 
+  let agreement_checkbox = $('#field-agreement')
   return{
     initialize:function(){
       $.proxyAll(this, /_on/)
-      let agreement_checkbox = $('#field-agreement')  
+      
+      
+      // for edit template
+      if(this.options.agreement == true){
+        agreement_checkbox.prop("checked", true)
+        agreement_checkbox.val(true)
+      }
+
       agreement_checkbox.on("change", this._onAgreementChange)
       
       // previously checked from the same sessoin, did something go wrong with the submission? saves and retrieve the results
       
-      isCheckboxPreviouslySet("agreement_check", agreement_checkbox)
+      //isCheckboxPreviouslySet("agreement_check", agreement_checkbox)
       
     },
     _onAgreementChange:function(e){
@@ -191,89 +272,46 @@ ckan.module('ckanext_wro_checkboxs_handler',function($){
   }
 })
 
+ckan.module('ckanext_wro_scheming_display_page_raws_visibility_control', function($){
+  
+  /*
+    conditionally change the display of two fields, according to values
+    of other two fields, the data collection 
+    orgnization and contact person fields, if the data collection
+    org is the same as author/contact, and if the author is the same
+    as contact respectivly this field should disappear.
+
+  called from:
+  ---------
+  1. templates/scheming/display_snippets/text_mod.html
+
+  */
+  
+  return{
+    initialize:function(){
+      $.proxyAll(this, /_on/); // you can remove this later
+      let dataset_rows_heads = $(".dataset-label")
+      $.each(dataset_rows_heads,function(){
+        let str = $(this).text()
+        // the author field 
+        if(str.includes("Is this author a contact person for the dataset?")){
+          let td = $(this).next()
+          let td_text = td.text()
+          if(td_text.includes("true")){$(this).parent().parent().parent().parent().parent().next().hide()}
+        }        
+        
+        if(str.includes("Did the author / contact organization collect the data?")){
+          let td = $(this).next()
+          let td_text = td.text()
+          
+          if(td_text.includes("true")){
+            $(this).parent().next().hide()
+          }
+        }
 
 
+      })
+    }
+  }
+})
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//  ckan.module("ckanext_toggle_date_reference",function($){
-//     return{
-//       initialize:function(){
-//         $.proxyAll(this, /_on/);
-//         let data_classification_fieldset = $("#data_classification-field_set")
-//         data_classification_fieldset.change(this._onChange)
-      
-//       },
-
-//       _onChange:function(e){
-//         first_date_ref = $('#field-data_reference_date-0-data_reference_date_to')
-//         second_date_ref = $('#field-data_reference_date-0-data_reference_date_from')
-//         if(first_date_ref){first_date_ref.required = !first_date_ref.required}
-//         else if(second_date_ref){second_date_ref.required = !second_date_ref.required}
-//         console.log(e.target.value)
-//       }
-
-//     }
-//  })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  // keeping this to show that using pubsub didn't work before trying to grap things by ids.   
-  ckan.module('ckanext_wro_metadata_form_checkbox_module',function($){
-    //  return {
-    //      initialize: function(){
-    //          $.proxyAll(this, /_on/); 
-            
-    //         //this.el.on('change', this._onChange)
-    //          //this.sandbox.subscribe('pub')
-    //       },
-    //      _onChange:function(e){
-    //          console.log("it's changed !", this.el.is(':checked'))
-             //this.sandbox.publish('pub', this.el.is(':checked'))
-//         },
-        //  teardown: function(){
-        //    this.sandbox.unsubscribe('pub')
-        //  }
-     //}
- });

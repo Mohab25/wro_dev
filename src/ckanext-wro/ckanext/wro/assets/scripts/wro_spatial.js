@@ -9,8 +9,8 @@ ckan.module("wro_spatial",function($){
             window.addEventListener("storage",this._onStorageChange);
         },
         _onClick:function(e){
-            //mapWindow =  window.open('http://34.71.13.135/map');
-            mapWindow =  window.open('http://localhost/map');
+            mapWindow =  window.open('http://34.71.13.135/map');
+            //mapWindow =  window.open('http://localhost/map');
         },
         _onStorageChange:function(e){
             console.log("value changed")

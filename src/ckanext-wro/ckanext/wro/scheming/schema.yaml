@@ -82,6 +82,14 @@ dataset_fields:
   form_placeholder: Description
   form_snippet: markdown.html
 
+- field_name: recommended_citation
+  label: Recommended citation
+  help_text: 
+  required: false
+  form_placeholder: Recommended citation
+  form_snippet: markdown.html
+
+
 - field_name: did_author_or_contact_organization_collect_the_data
   label: Did the author / contact organization collect the data?
   required: false
@@ -310,7 +318,7 @@ resource_fields:
     help_text: Name of the data transfer format - This is a SANS 1878 mandatory field
 
   - field_name: is_data_supplementary
-    label: Is data supplementary?
+    label: Supplementary material?
     required: false
     validators: boolean_validator
     preset: mod_checkbox
