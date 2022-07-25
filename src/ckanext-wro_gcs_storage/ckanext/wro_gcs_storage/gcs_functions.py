@@ -12,7 +12,7 @@ def upload_blob(bucket_name, source_file_name, destination_blob_name):
     storage_client = initialize_google_client()
     bucket = storage_client.bucket(bucket_name)
     blob = bucket.blob(destination_blob_name)
-    blob.upload_from_file(source_file_name)
+    blob.upload_from_filename(source_file_name)
 
 
 def delete_blob(resource_cloud_path, resource_dict):
