@@ -1,6 +1,7 @@
 from google.cloud import storage
 import pathlib
 from ckan.common import config
+import os
 
 def initialize_google_client():
     service_account_path = config.get('service_account_path')
@@ -12,7 +13,22 @@ def upload_blob(bucket_name, source_file_name, destination_blob_name):
     storage_client = initialize_google_client()
     bucket = storage_client.bucket(bucket_name)
     blob = bucket.blob(destination_blob_name)
-    blob.upload_from_filename(source_file_name)
+    # ========== resumable upload params
+    content_type = 'application/octet-stream'
+    num_retries = 10
+    size = os.fstat(source_file_name.fileno()).st_size
+    predefined_acl = None
+    if_generation_match= None
+    if_generation_not_match = None
+    if_metageneration_match = None
+    if_metageneration_not_match = None
+    # ==========
+    blob._do_resumable_upload(client=storage_client, stream = source_file_name,
+        content_type=content_type, size = size, num_retries=num_retries,
+        predefined_acl = predefined_acl, if_generation_match= if_generation_match,
+        if_generation_not_match= if_generation_not_match, if_metageneration_match=if_metageneration_match
+        , if_metageneration_not_match= if_metageneration_not_match
+    )
 
 
 def delete_blob(resource_cloud_path, resource_dict):
