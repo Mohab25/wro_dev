@@ -4,6 +4,7 @@ from ckan.common import config
 from . import helpers
 from .logic import converters, validators
 from .blueprints.map import map_blueprint
+from .blueprints.xml_parser import xml_parser_blueprint
 
 class WroPlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IConfigurer)
@@ -32,4 +33,4 @@ class WroPlugin(plugins.SingletonPlugin):
 
     # IBlueprint
     def get_blueprint(self):
-        return [ map_blueprint,]
+        return [ map_blueprint, xml_parser_blueprint]

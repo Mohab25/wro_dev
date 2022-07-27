@@ -22,6 +22,12 @@ spatial-js:
   contents:
     - scripts/wro_spatial.js
 
+xml_parse-js:
+  filters: rjsmin
+  output: ckanext-wro/%(version)s-xml_parse.js
+  contents:
+    - scripts/xml_parse.js
+
 # wro-css:
 #   filters: cssrewrite
 #   output: ckanext-wro/%(version)s-wro.css

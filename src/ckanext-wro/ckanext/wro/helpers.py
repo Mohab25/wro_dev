@@ -3,6 +3,7 @@ import logging
 import typing
 from shapely import geometry
 from ckan.plugins import toolkit
+import xml.dom.minidom as dom
 
 logger = logging.getLogger(__name__)
 

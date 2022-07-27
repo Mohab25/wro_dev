@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<dataset>
+        <email>homab3@gmail.com</email>
+        <title>xml testing dataset</title>
+        <name>xml-testing-dataset</name>
+        <authors>
+                <author_name>Dave</author_name>
+                <author_surname>bings</author_surname>
+                <owner_org>kartoza</owner_org>
+                <author_department>Development</author_department>
+                <contact_same_as_author>False</contact_same_as_author>
+        </authors>
+        <contact_person>
+                <contact_name>Mohab</contact_name>
+                <contact_email>homab3@gmail.com</contact_email>
+                <contact_orgnization>Kartoza</contact_orgnization>
+                <contact_department>Development</contact_department>
+        </contact_person>
+        <dataset_description>dataset to test xml dataset creation</dataset_description>
+        <recommended_citation>no citation available</recommended_citation>
+        <did_author_or_contact_organization_collected_the_data>False</did_author_or_contact_organization_collected_the_data>
+        <data_collection_organization>Collection Org</data_collection_organization>
+        <dataset_language>English</dataset_language>
+        <publisher>no-limits publish works</publisher>
+        <publication_date>1994-03-15</publication_date>
+        <wrc_project_number>12</wrc_project_number>
+        <license>Open (Creative Commons)</license>
+        <dataset_license_url>None</dataset_license_url>
+        <keywords>testing, metadata</keywords>
+        <spatial>-22.1265, 16.4699, -34.8212, 32.8931</spatial>
+        <wro_theme>agriculture</wro_theme>
+        <data_structure_category>structured</data_structure_category>
+        <uploader_estimation_of_extent_of_processing>raw</uploader_estimation_of_extent_of_processing>
+        <data_classification>time series</data_classification>
+        <data_reference_date>
+                <data_reference_date_from>1999-12-06</data_reference_date_from>
+                <data_reference_date_to>2039-12-22</data_reference_date_to>
+        </data_reference_date>
+        <alternative_identifier>no calories at all</alternative_identifier>
+        <vertical_extent_datum>do you even need a description</vertical_extent_datum>
+        <minimum_maximum_extent>
+                <minimum_vertical_extent>3</minimum_vertical_extent>
+                <maximum_vertical_extent>12</maximum_vertical_extent>
+        </minimum_maximum_extent>
+        <agreement>i agree to the data management plan and terms and conditions of the WRO </agreement>
+</dataset>

@@ -4,6 +4,17 @@
 
 {% if group %}
     {% link_for _('Add Dataset'), named_route='metadata-form.new', group=group, class_='btn btn-primary', icon='plus-square' %}
+    {% link_for _('Add Dataset from file'), named_route='metadata-form.new', group=group, class_='btn btn-warning', icon='plus-square' %}
 {% else %}
     {% link_for _('Add ' + dataset_type.title()), named_route='metadata-form.new', class_='btn btn-primary', icon='plus-square' %}
-{% endif %}
+        <button class="btn btn-warning" onclick="document.getElementById('upload_input').click()">
+            <i class="fa fa-cloud-upload"></i>{{ _("Add datasets from xml file") }}
+        </button>
+            <input type="file"
+            id = "upload_input"
+            name = "xml_dataset"
+            onclick=""
+            style="display: none;"
+            data-module = "xml_parse"
+            >
+    {% endif %}

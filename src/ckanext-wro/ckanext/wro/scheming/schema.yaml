@@ -116,8 +116,8 @@ dataset_fields:
   required: true
   form_placeholder: Publisher
 
-- field_name: publication_year
-  label: Publication year
+- field_name: publication_date
+  label: Publication date
   help_text: Year in which the digital object was published
   required: true
   preset: date
@@ -222,7 +222,7 @@ dataset_fields:
   - value: unstructured
     label: Unstructured (data cannot be stored in relational databases and is often stored in its raw format, such as images)
 
-- field_name: uploader_estimation_of_extent
+- field_name: uploader_estimation_of_extent_of_processing
   label: Uploader estimation of extent to which data have been processed
   required: true
   preset: radio
