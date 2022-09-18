@@ -1,0 +1,10 @@
+Metadata-Version: 1.0
+Name: ckanext-cloudstorage
+Version: 0.1.1
+Summary: Cloud storage for CKAN
+Home-page: http://github.com/open-data/ckanext-cloudstorage
+Author: Tyler Kennedy
+Author-email: tk@tkte.ch
+License: MIT
+Description: UNKNOWN
+Platform: UNKNOWN

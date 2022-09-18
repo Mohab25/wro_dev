@@ -1,0 +1,8 @@
+{% ckan_extends %}
+{# % set dataset_extent_or_default = h.get_pkg_dict_extra(c.pkg_dict, 'spatial','') % #}
+{% set dataset_extent_or_default = c.pkg_dict['spatial'] %}
+{% block primary_content_inner %}
+{{ dataset_extent }}
+{% snippet "spatial/snippets/dataset_map_sidebar.html", extent=dataset_extent_or_default%}
+{% endblock %}
+

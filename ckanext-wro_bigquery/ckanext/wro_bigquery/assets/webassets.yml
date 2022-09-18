@@ -1,0 +1,14 @@
+wro_bigquery-js:
+  filter: rjsmin
+  output: ckanext-wro_bigquery/%(version)s-wro_bigquery.js
+  contents:
+    - js/wro_bigquery.js
+  extra:
+    preload:
+      - base/main
+
+# wro_bigquery-css:
+#   filter: cssrewrite
+#   output: ckanext-wro_bigquery/%(version)s-wro_bigquery.css
+#   contents:
+#     - css/wro_bigquery.css

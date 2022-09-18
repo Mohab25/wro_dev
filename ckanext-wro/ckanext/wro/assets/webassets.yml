@@ -1,0 +1,47 @@
+dataset-spatial-extent-map-js:
+  filters: rjsmin
+  output: ckanext-wro/%(version)s-datasetSpatialExtentMap.js
+  contents:
+    - js/datasetSpatialExtentMap.js
+  extra:
+    preload:
+      - base/main
+
+metadata-scheming-scripts-js:
+  filters: rjsmin
+  output: ckanext-wro/%(version)s-wro.js
+  extra:
+    preload:
+      - base/main
+  contents:
+    - scripts/schemingScripts.js
+
+spatial-js:
+  filters: rjsmin
+  output: ckanext-wro/%(version)s-wro_spatial.js
+  contents:
+    - scripts/wro_spatial.js
+
+xml_parse-js:
+  filters: rjsmin
+  output: ckanext-wro/%(version)s-xml_parse.js
+  contents:
+    - scripts/xml_parse.js
+
+# wro-css:
+#   filters: cssrewrite
+#   output: ckanext-wro/%(version)s-wro.css
+#   contents:
+#     - css/styles.css
+
+captialize-css:
+  filters: cssrewrite
+  output: ckanext-wro/%(version)s-captialize.css
+  contents:
+    - css/captialize_package_diplay.css
+
+bigquery_views-css:
+  filters: cssrewrite
+  output: ckanext-wro/%(version)s-bigquery_views.css
+  contents:
+    - css/bigquery_views.css

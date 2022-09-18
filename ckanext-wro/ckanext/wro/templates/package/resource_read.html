@@ -1,0 +1,84 @@
+{% ckan_extends %}
+{% set res = resource %}
+
+<!-- URL:storage:// -->
+
+{# ========================= title, url on upper section ====================  #}
+  {% if res.get('resource_name') != "" %}
+    {% set display_name = res.resource_name %}
+  {% else %}
+    {% set display_name = res.name %}
+  {% endif %}
+
+  {% if resource.is_link  %}
+    {% set custom_url = resource.name.lower() %}
+    {# you need to check for bigquery here #}
+  {% else %}
+    {% set custom_url = h.resource_read_helper(res) %}
+  {% endif %}
+
+  {% block resource_read_title %}<h1 class="page-heading">{{ display_name }}</h1>{% endblock %}
+  {% block resource_read_url %}
+  {% if not res.is_bigquery_table %}
+      <p class="text-muted ellipsis">{{ _('URL:') }}<a class="resource-url-analytics" href="{{ custom_url }}" title="{{ custom_url }}">{{ custom_url }}</a></p>
+  {% else %}
+    <p></p>
+  {% endif %}
+  {% endblock %}
+  {# =============================================  #}
+
+
+<!-- Download Block -->
+{# ========================= Download button and behavior ====================  #}
+{% block resource_actions_inner %}
+{% if h.check_access('package_update', {'id':pkg.id }) and not is_activity_archive %}
+<li>{% link_for _('Manage'), named_route=pkg.type ~ '_resource.edit', id=pkg.name, resource_id=res.id, class_='btn btn-default', icon='wrench' %}</li>
+{% endif %}
+{% if res.url and h.is_url(res.url) %}
+<li>
+  <div class="btn-group">
+  <a class="btn btn-primary resource-url-analytics resource-type-{{ res.resource_type }}" href="{{ custom_url }}">
+    {% if not res.has_views and not res.url_type == 'upload' %}
+      <i class="fa fa-external-link"></i> {{ _('Go to resource') }}
+    {% else %}
+      <i class="fa fa-arrow-circle-o-down"></i> {{ _('Download') }}
+    {% endif %}
+  </a>
+    {% block download_resource_button %}
+      {# original file handles datastore here #}
+    {% endblock %}
+  </div>
+</li>
+{% endif %}
+{% endblock %}
+
+{# =============================================  #}
+
+<!-- Resource View -->
+{# ========================= Resource View ====================  #}
+
+{% block resource_view_content %}
+<div class="resource-view">
+  {% set resource_preview = h.resource_preview(resource, package) %}
+  {% set views_created = res.has_views or resource_preview %}
+  {% set package_name = h.get_package_name(resource.package_id) %}
+  {% if views_created %}
+    {% if resource_preview and not current_resource_view %}
+      {{ h.resource_preview(resource, package) }}
+    {% else %}
+      {% for resource_view in resource_views %}
+        {% if resource_view == current_resource_view %}
+          {% snippet 'package/snippets/resource_view.html',
+             resource_view=resource_view,
+             resource=resource,
+             package=package
+           %}
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+  {% else %}
+  {% endif %}
+</div>
+{% endblock %}
+
+{# =============================================  #}

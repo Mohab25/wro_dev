@@ -1,0 +1,82 @@
+{% ckan_extends %}
+{# fixing download button issue #}
+
+{# ======================= check if the resource is a link or an upload #}
+
+{% if res.is_link  %}
+{% set custom_url = res.name.lower() %}
+{% if res.get('resource_name') != "" %}
+  {% set display_name = res.resource_name %}
+{% else %}
+  {% set display_name = res.name %}
+{% endif %}
+{% else %}
+{% set custom_url = h.resource_read_helper(res) %}
+{% endif %}
+
+{# ================================== #}
+
+{# ======================= resource title #}
+
+{% set url_action = pkg.type ~ ('_resource.edit' if url_is_edit and can_edit else '_resource.read') %}
+{% set url = h.url_for(url_action, id=pkg.id if is_activity_archive else pkg.name, resource_id=res.id, **({'activity_id': request.args['activity_id']} if 'activity_id' in request.args else {})) %}
+
+  {% block resource_item_title %}
+  <a class="heading" href="{{ url }}" title="{{ res.name or res.description }}">
+    {{ display_name | truncate(50) }}<span class="format-label" property="dc:format" data-format="{{ res.format.lower() or 'data' }}">{{ h.get_translated(res, 'format') }}</span>
+    {{ h.popular('views', res.tracking_summary.total, min=10) if res.tracking_summary }}
+  </a>
+  {% endblock %}
+
+{# ================================== #}
+
+{% block resource_item_explore_links %}
+
+{# ======================= preview #}
+
+<li>
+  <a href="{{ url }}">
+    {% if not is_activity_archive and res.has_views %}
+      <i class="fa fa-bar-chart-o"></i>
+      {{ _('Preview') }}
+    {% else %}
+      <i class="fa fa-info-circle"></i>
+      {{ _('More information') }}
+    {% endif %}
+  </a>
+</li>
+
+{# ================================== #}
+
+{# ======================= Download #}
+
+{% if res.url and h.is_url(res.url) %}
+
+<li>
+  <a href="{{ custom_url }}" class="resource-url-analytics" target="_blank">
+    {% if res.has_views or res.url_type == 'upload' %}
+      <i class="fa fa-arrow-circle-o-down"></i>
+      {{ _('Download') }}
+    {% else %}
+      <i class="fa fa-external-link"></i>
+      {{ _('Go to resource') }}
+    {% endif %}
+  </a>
+</li>
+{% endif %}
+
+{# ================================== #}
+
+{# ======================= Edit #}
+
+{% if can_edit %}
+<li>
+  <a href="{{ h.url_for(pkg.type ~ '_resource.edit', id=pkg.name, resource_id=res.id) }}">
+    <i class="fa fa-pencil-square-o"></i>
+    {{ _('Edit') }}
+  </a>
+</li>
+{% endif %}
+{% endblock %}
+
+{# ================================== #}

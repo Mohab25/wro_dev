@@ -1,0 +1,24 @@
+{% extends 'package/edit_base.html' %}
+{% block primary_content_inner %}
+    {% block form %}
+    <!-- {{ pkg_dict }} -->
+	{{- h.snippet(form_snippet, pkg_dict=pkg_dict, **form_vars) -}}
+    <div 
+        style="display: none;" 
+        data-module="ckanext_wro_toggle_repeating_field_visibilty" 
+        data-module-author_contact_collected_data="{{ pkg_dict.did_author_or_contact_organization_collect_the_data }}"
+    ></div>
+    <div 
+        style="display: none;" 
+        data-module="ckanext_wro_toggle_data_collection_field" 
+        data-module-author_contact_collected_data="{{ pkg_dict.did_author_or_contact_organization_collect_the_data }}"
+    ></div>
+
+    <div 
+        style="display: none;" 
+        data-module="ckanext_wro_checkboxs_handler" 
+        data-module-agreement="{{ pkg_dict.agreement }}"
+    ></div>
+
+    {% endblock %}
+{% endblock %}

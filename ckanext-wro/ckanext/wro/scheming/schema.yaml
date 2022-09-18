@@ -1,0 +1,371 @@
+scheming_version: 2
+dataset_type: metadata-form
+#about_url: http://example.com/dataset
+
+dataset_fields:
+
+- field_name: email
+  label: Email
+  help_text: Input your Email address
+  required: true
+  form_placeholder: Your email address
+
+- field_name: title
+  label: Dataset title (maximum 100 characters)
+  preset: title
+  required: true
+  form_placeholder: e.g. A descriptive title
+  form_snippet: title.html
+
+- field_name: name
+  label: Dateset metadata URL
+  form_placeholder: /metadata-form/dataset_title
+  preset: dataset_slug
+  display_snippet: link.html
+
+- field_name: authors
+  label: Authors
+  repeating_label: Author
+  preset: repeated_subfields_extended
+  repeating_subfields:
+    - field_name: author_name
+      label: Author first name
+      required: true
+    - field_name: author_surname
+      label: Author surname
+    - field_name: author_email
+      label: Email
+      required: false
+    - field_name: author_organization
+      label: Author organization
+      required: false
+    - field_name: author_department
+      label: Department
+      required: false
+    - field_name: contact_same_as_author
+      label: Is this author a contact person for the dataset?
+      required: false
+      # tried to add boolean validator and didn't work out
+      preset: mod_checkbox
+      choices:
+        - value:
+          label: 
+
+- field_name: contact_person
+  label: Contact person
+  repeating_label: Contact
+  # help_text: Leave blank if it the same as the author
+  preset: repeated_subfields_extended
+  repeating_subfields:
+    - field_name: contact_name
+      label: Contact name
+      required: true
+      preset: contact_same_as_author_preset
+    - field_name: contact_email
+      label: Email
+      required: true
+      preset: contact_same_as_author_preset
+    - field_name: contact_orgnization
+      label: Contact organization
+      required: false
+      preset: contact_same_as_author_preset
+    - field_name: contact_department
+      label: Department
+      required: false
+    
+- field_name: notes
+  label: Dataset description
+  help_text: Short description of dataset, e.g. 0-500 words
+  required: true
+  form_placeholder: Description
+  form_snippet: markdown.html
+
+- field_name: owner_org
+  label: Organization
+  required: true
+  preset: organization_mod_preset
+  validators: ignore_missing
+
+- field_name: citation
+  label: Recommended citation
+  preset: repeated_subfields_extended
+  repeating_subfields:
+    - field_name: citation_title
+      label: Citation title
+      required: false
+      help_text: name by which the cited dataset is known
+    - field_name: citation_date
+      label: Citation date
+      preset: date
+      required: false
+      help_text: reference date for cited resource
+    # the citation identifier could be a choice field limited to identifiers we have and others choice field enabling the user to insert a unique one
+    - field_name: citation_identifier
+      label: Citation identifier
+      required: false
+
+- field_name: did_author_or_contact_organization_collect_the_data
+  label: Did the author / contact organization collect the data?
+  required: false
+  validators: boolean_validator
+  preset: mod_checkbox 
+  choices:
+    - value:
+      label:
+
+- field_name: data_collection_organization
+  label: Name of organization that collected the data
+  required: true
+  preset: data_collection_text_preset
+
+- field_name: dataset_language
+  label: Dataset language
+  help_text: Assumed English if not provided
+  required: false
+  form_placeholder: Dataset language
+
+- field_name: publisher
+  label: Publisher
+  help_text: Institution that owns/publishes dataset {will become a drop-down list with all names of SA institutions}
+  required: true
+  form_placeholder: Publisher
+
+- field_name: publication_date
+  label: Publication date
+  help_text: Year in which the digital object was published
+  required: true
+  preset: date
+
+- field_name: wrc_project_number
+  label: Project number
+  help_text: WRC Project or report number (if applicable)
+  required: false
+
+- field_name: license
+  label: License
+  help_text: For creative commons license please visit https://creativecommons.org/
+  required: true
+  preset: select
+  choices:
+  - value: Open (Creative Commons)
+    label: Open (Creative commons)
+  - value: Restricted access
+    label: Restricted access
+  - value: Ohter
+    label: Other
+
+- field_name: dataset_license_url
+  label: License URL
+  help_text: Specify the license url
+  required: false
+  form_placeholder: http://creativecommons.org/
+
+- field_name: keywords
+  label: Keywords
+  help_text: Keywords are used to tag/describe the dataset for discoverability in data searches (e.g. temperature, salinity, maize)
+  required: true
+  form_placeholder: Input keywords
+
+- field_name: spatial
+  label: Geographic location or bounding box coordinates
+  help_allow_html: true
+  required: false
+  help_text: >-
+    <b>Leave blank if data is not spatial</b>, expressed as point coordinates or upper-left lower-right bounding box decimal coordinates (comma separated going with the order lat, long), e.g. -20.629147, 13.165308,-35.2462649, 35.7811468 for all of South Africa.
+  preset: spatial_data_preset
+  
+  #display_snippet: null
+
+- field_name: wro_theme
+  label: Dataset topic category 
+  required: true
+  preset: select
+  choices:
+  - value: agriculture
+    label: Agriculture
+  - value: biodiversity
+    label: Biodiversity
+  - value: citizen_science
+    label: Citizen science
+  - value: dam_level
+    label: Dam level
+  - value: drought
+    label: Drought
+  - value: economics
+    label: Economics
+  - value: ecosystems
+    label: Ecosystems
+  - value: estuaries
+    label: Estuaries
+  - value: food_security
+    label: Food security
+  - value: groundwater
+    label: Groundwater
+  - value: hydrological_data_and_modelling
+    label: Hydrological data and modelling
+  - value: legislation
+    label: Legislation
+  - value: marine_water
+    label: Marine water
+  - value: mine_water
+    label: Mine water
+  - value: social
+    label: Social
+  - value: streamflow
+    label: Streamflow
+  - value: transboundary_water
+    label: Transboundary water
+  - value: water_quality
+    label: Water quality
+  - value: water_scarcity
+    label: Water scarcity
+  - value: weather_and_climate_data
+    label: Weather and climate data
+  - value: wetlands
+    label: Wetlands
+
+- field_name: data_structure_category
+  label: Data structure category 
+  required: true
+  preset: radio
+  choices:
+  - value: structured
+    label: Structured (clearly labelled and in a standardised format)
+  - value: semi-structured
+    label: Semi-structured (does not fully conform to the tabular format of structured data, but may contain tags or markers identifying properties to arrange it into an organisational framework)
+  - value: unstructured
+    label: Unstructured (data cannot be stored in relational databases and is often stored in its raw format, such as images)
+
+- field_name: uploader_estimation_of_extent_of_processing
+  label: Uploader estimation of extent to which data have been processed
+  required: true
+  preset: radio
+  choices:
+  - value: raw
+    label: Raw
+  - value: still_being_processed
+    label: Still being processed
+  - value: refined
+    label: Refined
+  - value: access
+    label: Access
+
+- field_name: data_classification
+  label: Is the data time seriesed or static
+  required: true
+  preset: data_classification_preset
+  choices:
+  - value: time series
+    label: Time series
+  - value: static
+    label: Static
+  - value: both
+    label: Both
+
+- field_name: data_reference_date
+  label: Data reference date
+  required: false
+  preset: simple_subfields
+  help_text: specify the refernce dates
+  repeating_subfields:
+      - field_name: data_reference_date_from
+        label: Data reference date (from)
+        required: false
+        preset: conditional_required_reference_date
+      - field_name: data_reference_date_to
+        required: false
+        label: Data reference date (to)
+        preset: conditional_required_reference_date
+
+- field_name: alternative_identifier
+  label: Alternate identifier
+  help_text: Any unique identifier for the metadata/dataset (e.g. links to other identifiers, DOI, ISBN. Mandatory for replacement versions of the same data).
+  required: false
+  form_placeholder: e.g. DOI
+
+- field_name: vertical_extent_datum
+  label: Vertical extent datum
+  help_text: Unit of measure or reference point used to describe vertical extents (e.g. masl - metres above sea level, mbgl - metres below ground level)
+  required: false
+  form_placeholder:
+
+- field_name: minimum_maximum_extent
+  label: Vertical minimum-maximum extent
+  help_text: Specify the vertical minimum and maximum extent
+  preset: simple_subfields # customized by mohab(a lot to be added)
+  required: false
+  repeating_subfields:
+    - field_name: minimum_vertical_extent
+      label: Minimum vertical extent
+    - field_name: maximum_vertical_extent
+      label: Maximum vertical extent
+
+- field_name: tags
+  label: Tags
+  repeating_subfields:
+    - field_name: tag_name
+      label: Tag name
+      required: false
+      form_placeholder: E.g. economy
+      validators: ignore_missing
+      help_text: >-
+        Additional keywords useful for describing the dataset. In order to optimize searchability, it is
+        recommended to add at least three keywords, press "Add" button below.
+    
+    - field_name: tag_type
+      label: Tag type
+      required: false
+      preset: select
+      validators: ignore_missing
+      choices:
+        - value: 001
+          label: Discipline
+        - value: 002
+          label: Place
+        - value: 003
+          label: Stratum
+        - value: 004
+          label: Temporal
+        - value: 005
+          label: Theme
+
+- field_name: agreement
+  label: I agree to the data management plan and terms and conditions of the WRO
+  required: true
+#  validators: boolean_validator
+  preset: agreement
+  choices:
+    - value:
+      label:
+
+resource_fields:
+
+  - field_name: name
+    label: URL
+    preset: resource_url_upload
+
+  - field_name: resource_name
+    label: Name
+    form_placeholder: eg. January 2011 Gold Prices
+
+  - field_name: dataset_description
+    label: Description of the data
+    form_snippet: markdown.html
+    form_placeholder: Some useful notes about the data
+
+  - field_name: format
+    label: Format
+    required: true
+    preset: resource_format_autocomplete
+    #validators: not_empty (cause an error, the resource page keeps reloading without submission)
+    help_text: Name of the data transfer format - This is a SANS 1878 mandatory field
+
+  - field_name: is_data_supplementary
+    label: Supplementary material?
+    required: false
+    validators: boolean_validator
+    preset: mod_checkbox
+    choices:
+      - value:
+        label:
+    help_text: Will be considered primary data assets if not specified

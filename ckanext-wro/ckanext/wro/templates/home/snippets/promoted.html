@@ -1,0 +1,27 @@
+{% set intro = g.site_intro_text %}
+
+<div class="module-content box">
+  <div>
+    {% if intro %}
+      {{ h.render_markdown(intro) }}
+    {% else %}
+      <h2 class="page-heading">{{ _("Welcome to the WRO") }}</h2>
+      <p style="font-family: Helvetica Neue ;">
+        {% trans %}The Water Research Observatory is an ongoing project funded by South Africa's Water Research Commission (WRC).
+         It aims to bring together important water-related datasets and information.
+        {% endtrans %}
+      </p>
+    {% endif %}
+  </div>
+
+  {% block home_image %}
+    <section class="featured media-overlay hidden-xs">
+      <h2 class="media-heading">{% block home_image_caption %}{{ _("Water Research Observatory") }}{% endblock %}</h2>
+      {% block home_image_content %}
+        <a class="media-image" href="#">
+          <img class="img-responsive" src="{{ h.url_for_static('wro_background.png') }}" alt="Placeholder" width="420" height="220" />
+        </a>
+      {% endblock %}
+    </section>
+  {% endblock %}
+</div>

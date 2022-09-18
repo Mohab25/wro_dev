@@ -1,0 +1,26 @@
+cloudstorage-multipart-upload-js:
+  filter: rjsmin
+  output: ckanext-cloudstorage/%(version)s-cloudstorage.js
+  contents:
+    - scripts/cloudstorage-multipart-upload.js # this is an entry point
+  extra:
+    preload:
+      - base/main
+
+file-upload-js:
+  filter: rjsmin
+  output: ckanext-cloudstorage/%(version)s-cloudstorage.js
+  contents:
+    - scripts/vendor/file-upload.js # this is an entry point
+  extra:
+    preload:
+      - base/main
+
+jquery-widget-js:
+  filter: rjsmin
+  output: ckanext-cloudstorage/%(version)s-cloudstorage.js
+  contents:
+    - scripts/vendor/jquery-widget.js # this is an entry point
+  extra:
+    preload:
+      - base/main

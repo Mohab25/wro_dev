@@ -1,0 +1,14 @@
+.bigquery_mash_view{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.bigquery_dataset_view{
+    flex-basis: 50%;
+}
+
+#map{
+    flex-basis: 50%;
+}

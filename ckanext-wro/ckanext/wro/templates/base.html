@@ -1,0 +1,18 @@
+{% ckan_extends %}
+
+{% block styles%}
+    {{ super() }}
+    {% asset 'wro_assets/wro-css' %}
+    {% asset 'wro_assets/captialize-css' %} 
+    {% asset 'wro_assets/metadata-scheming-scripts-js' %}
+    {% asset 'wro_assets/spatial-js' %}
+    {% asset 'wro_assets/xml_parse-js' %}
+    {% asset 'wro_assets/bigquery_views-css' %} 
+
+{% endblock %}
+
+
+{#  this equates to assets/css/template_changer.css, the
+    first 'template_changer_assets'/ is the name we gave to the assets directory in plugin.py and
+    template_changer-css is the title of webassets.yaml section , if you want to change the name of the 
+    file to something as styles.css, change content of the yaml file also #}

@@ -1,0 +1,78 @@
+scheming_presets_version: 1
+
+about: Additional ckanext-scheming presets
+
+about_url: "http://github.com/ckan/ckanext-scheming#preset"
+
+presets:
+  # - preset_name: emc_free_tags_tag_string_autocomplete
+  #   values:
+  #     validators: >-
+  #       ignore_missing
+  #       tag_string_convert
+  #     classes: control-full
+  #     form_attrs:
+  #       data-module: autocomplete
+  #       data-module-tags: ""
+  # this is the important part i keep this preset for
+  #       data-module-source: "/api/3/action/tag_autocomplete?query=?"
+  #       class: ""
+
+  - preset_name: contact_same_as_author_preset
+    values:
+      validators: author_same_as_contact
+      form_snippet: "text.html"
+      form_attrs:
+        data-module: ckanext_wro_title_field_word_count
+
+
+  - preset_name: organization_mod_preset
+    values:
+      validators: >-
+        owner_org_validator
+        unicode
+      form_snippet: "organization_mod.html"
+
+
+  - preset_name: spatial_data_preset
+    values:
+      validators: convert_raw_input_to_geojson
+      form_snippet: "map.html"
+      display_snippet: null
+
+  - preset_name: mod_checkbox
+    values:
+      form_snippet: "multiple_checkbox_mod.html"
+  
+  - preset_name: simple_subfields
+    values:
+      form_snippet: "simple_subfields.html"
+
+  - preset_name: conditional_required_reference_date
+    values:
+      validators: conditional_date_reference_validator  
+      form_snippet: date.html
+      display_snippet: date.html
+
+  - preset_name: repeated_subfields_extended
+    values:
+      form_snippet: "repeating_subfields_extended.html"
+
+  - preset_name: data_collection_text_preset
+    values:
+      validators: author_or_contact_collected_data
+      form_snippet: "text.html"
+      display_snippet: "text_mod.html"
+      form_attrs:
+        data-module: "ckanext_wro_toggle_data_collection_field"
+
+  - preset_name: data_classification_preset
+    values:
+      form_snippet: "mod_radio.html"
+      # form_attrs:
+      #   data-module: ckanext_wro_toggle_data_collection_field
+
+  - preset_name: agreement
+    values:
+      validators: agreement
+      form_snippet: "multiple_checkbox_mod.html"

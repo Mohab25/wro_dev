@@ -1,0 +1,8 @@
+{% ckan_extends %}
+
+{% block scripts %}
+    {{ super() }}
+    {% asset 'cloudstorage_assets/cloudstorage-multipart-upload-js' %}
+    {% asset 'cloudstorage_assets/file-upload-js' %}
+    {% asset 'cloudstorage_assets/jquery-widget-js' %}
+{% endblock %}

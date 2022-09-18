@@ -1,0 +1,48 @@
+{% asset "wro-bigquery_assets/wro_bigquery-js" %}
+{# this should be inhanced and called elsewhere #}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css" integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ==" crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.8.0/dist/leaflet.js" integrity="sha512-BB3hKbKWOc9Ez/TAwyWxNXeoV9c1v6FIeYiBieIWkpLjauysF18NzgR1MBNBXf8/KABdlkX68nAhlwcDFLGPCQ==" crossorigin=""></script>
+
+{% set package_name = h.get_package_name(resource.package_id) %}
+{% set data = h.get_data(bigquery_dataset = package_name, bigquery_table = resource.resource_name) %}
+{% set spatial_data = h.get_spatial_data(bigquery_dataset = package_name, bigquery_table = resource.resource_name) %}
+
+
+{% set heads = data[0].keys() %}
+{% block bodytag %}
+<div class="bigquery_mash_view">
+    <div class="mash-map-container">
+        <div data-module="geo_data_preview" id="map" data-module-spatial_data="{{ spatial_data }}"> </div>
+    </div>
+    
+    <div class="mash-dataset-container">
+            <div data-module="bigquery_dataset_view" id="resize_wrapper">
+            <table
+                id="bigquery_dataset_preview_table" width="100%"
+                class="table table-striped table-bordered table-condensed table-hover"      
+                >
+                <thead>
+                    <tr>
+                        {% for head in heads %}
+                            <th> {{ head }} </th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in data %}
+                        <tr>
+                            {% for val in item.values() %}
+                                <td>{{ val }}</td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}    
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+</div>
+  {%- endblock -%}

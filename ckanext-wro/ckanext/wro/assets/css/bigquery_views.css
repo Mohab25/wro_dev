@@ -1,0 +1,52 @@
+.leaflet-popup-content-wrapper {
+    width:500px;
+    height:500px;
+}
+
+.leaflet-popup-content-wrapper .leaflet-popup-content {
+    width:100% !important;
+    height:100%;
+    overflow: auto;
+    margin: 0px 24px 13px 4px;
+}
+
+.leaflet-popup-tip-container {
+}
+
+.table{
+    table-layout: auto;
+}
+
+.table > tbody > tr > td {
+    line-height: 40px;
+}
+
+#bigquery_dataset_preview_table_wrapper{
+    overflow: auto;
+}
+
+.bigquery_mash_view{
+    /* width: 1200px; */
+    height:500px;
+    display: flex;
+    flex-direction: row;
+
+}
+
+.mash-dataset-container{
+    width:600px;
+    height:600px;
+    flex-basis: 50%;
+}
+
+.mash-map-container{
+    flex-basis: 50%;
+}
+
+.bigquery_dataset_view{
+    width: 50%;
+}
+
+#map{
+    width: 50%;
+}
