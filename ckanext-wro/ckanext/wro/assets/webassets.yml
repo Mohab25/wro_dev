@@ -28,6 +28,12 @@ xml_parse-js:
   contents:
     - scripts/xml_parse.js
 
+google_cloud_upload_note_modal-js:
+  filters: rjsmin
+  output: ckanext-wro/%(version)s-google_cloud_upload_note.js
+  contents:
+    - scripts/google_cloud_upload_note.js
+
 # wro-css:
 #   filters: cssrewrite
 #   output: ckanext-wro/%(version)s-wro.css
@@ -45,3 +51,9 @@ bigquery_views-css:
   output: ckanext-wro/%(version)s-bigquery_views.css
   contents:
     - css/bigquery_views.css
+
+cloud_upload_note-css:
+  filters: cssrewrite
+  output: ckanext-wro/%(version)s-cloud_upload_note.css
+  contents:
+    - css/cloud_upload_note.css
