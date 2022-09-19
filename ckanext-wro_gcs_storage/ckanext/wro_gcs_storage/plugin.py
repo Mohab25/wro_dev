@@ -4,7 +4,7 @@ import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
 from . import gcs_uploader
 from . import template_helpers as h
-from .logic.action.delete import resource_delete as resourceDelete
+#from .logic.action.delete import resource_delete as resourceDelete
 # from .logic.action.create import resource_create
 # from .logic.action.update import resource_update
 
@@ -12,9 +12,9 @@ from .logic.action import ckan_custom_actions
 
 global_pkg_dict = None
 
-@toolkit.chained_action
-def resource_delete(resource_delete,context, data_dict):
-    resourceDelete(context, data_dict=data_dict)
+# @toolkit.chained_action
+# def resource_delete(resource_delete,context, data_dict):
+#     resourceDelete(context, data_dict=data_dict)
 
 
 class WroGcsStoragePlugin(plugins.SingletonPlugin):

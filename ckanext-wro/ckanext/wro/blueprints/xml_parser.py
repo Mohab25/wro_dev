@@ -110,10 +110,9 @@ def check_file_fields(xml_file) -> dict:
 
 def file_has_xml_dataset(xml_file):
     """
-    parses the file,
+    parses a file,
     checks if file has a
-    dataset within it and
-    returns it.
+    dataset and returns it.
     """
     try:
         dom_ob = dom.parse(xml_file)
@@ -188,10 +187,10 @@ def handle_date_fields(root_ob):
     transform date strings
     to dates.
     """
-    date_fields = ["data_reference_date-0-data_reference_date_from", "data_reference_date-0-data_reference_date_to"]
-    for field in date_fields:
-        iso_date_field = handle_date_field(root_ob[field])
-        root_ob.update(iso_date_field)
+    # date_fields = ["data_reference_date-0-data_reference_date_from", "data_reference_date-0-data_reference_date_to"]
+    # for field in date_fields:
+    #     iso_date_field = handle_date_field(root_ob[field])
+    #     root_ob.update(iso_date_field)
     return root_ob
 
 
@@ -202,15 +201,16 @@ def create_ckan_dataset(root_ob):
     """
     logger.debug("from xml parser blueprint", root_ob)
     package_title = root_ob["title"]
-    slug_url_field = package_title.replace(" ", "-")
+    slug_url_field = change_slug_url_field(package_title)
     root_ob.update({"name": slug_url_field})
     root_ob.update({"type": "metadata-form"})
     root_ob = extra_fields(root_ob)
+    # raise RuntimeError(root_ob)
     create_action = toolkit.get_action("package_create")
     try:
         create_action(data_dict=root_ob)
     except ValidationError as e:
-        error_summary = e.error_summary.get("Name")
+        error_summary = e.__str__().replace("None","")
         error_summary = "" if error_summary is None else error_summary
         return {
             "state": False,
@@ -254,12 +254,37 @@ def send_email_to_creator(res):
 
 
 def extra_fields(root_ob):
-    root_ob.update({"extras":[]})
-    for key in root_ob:
-        if key not in PACKAGE_NON_EXTRAS_FIELDS:
-            root_ob["extras"].append({"key":key,"value":root_ob[key]})
-    keys = [key for key in root_ob.keys()] # deep copy
-    for key in keys:
-        if key not in PACKAGE_NON_EXTRAS_FIELDS:
-            root_ob.pop(key) 
+    """
+    each dataset has key, value
+    extra data attached, inserted
+    into package_extra database.
+    """
+    #root_ob.update({"extras":[]})
+    temp_ob = {}
+    # for key in root_ob:
+    #     if key not in PACKAGE_NON_EXTRAS_FIELDS:
+    #         #root_ob["extras"].append({"key":key,"value":root_ob[key]})
+    #         temp_ob.update({"key":key,"value":root_ob[key]})
+    
+    # raise RuntimeError(temp_ob)
+    root_ob.update(root_ob)
+    # these are the extra keys, remove them from the rest of the dataset 
+    # keys = [key for key in root_ob.keys()] # deep copy
+    # for key in keys:
+    #     if key not in PACKAGE_NON_EXTRAS_FIELDS:
+    #         root_ob.pop(key) 
+    # raise RuntimeError("the root object:",root_ob)
     return root_ob
+
+def change_slug_url_field(dataset_title):
+    """
+    ckan refuses url names 
+    for datasets with special
+    chars, removes those if any 
+    """
+    for item in dataset_title:
+        if item in "!”#$%&'()*+,-./:;<=>?@[\]^_`{|}~.":
+            dataset_title = dataset_title.replace(item, "")
+
+    dataset_title = dataset_title.replace(" ", "-")
+    return dataset_title
