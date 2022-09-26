@@ -9,7 +9,8 @@ ckan.module("wro_spatial",function($){
             window.addEventListener("storage",this._onStorageChange);
         },
         _onClick:function(e){
-            mapWindow =  window.open('https://data.waterresearchobservatory.org/map/');
+            let window_origin = location.origin
+            mapWindow =  window.open(`${window_origin}/map/`);
             //mapWindow =  window.open('http://localhost/map');
         },
         _onStorageChange:function(e){
