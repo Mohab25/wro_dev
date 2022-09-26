@@ -40,3 +40,7 @@ coverage.xml
 
 # Sphinx documentation
 docs/_build/
+
+# env file for bigquery tables
+ckanext/wro_bigquery/env.py
+
