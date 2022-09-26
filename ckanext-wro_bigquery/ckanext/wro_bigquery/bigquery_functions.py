@@ -24,10 +24,14 @@ def make_query(bigquery_project:str = "wrc-wro",bigquery_dataset:str = "" , bigq
     credentials = '/home/mohab/Main/development/googleAuthKeys/wro project/bigquery admin/wrc-wro-7a61a964dfbd.json'
     client = bigquery.Client.from_service_account_json(credentials)
     data = []
+    underscore_names = use_name_underscores(bigquery_dataset, bigquery_table)
+    bigquery_dataset = underscore_names.get("bigquery_dataset")
+    bigquery_table = underscore_names.get("bigquery_table")
+    path = f"{bigquery_project}.{bigquery_dataset}.{bigquery_table}"
+    # raise RuntimeError(path)
     query = f"""
         SELECT * FROM `{bigquery_project}.{bigquery_dataset}.{bigquery_table}`
     """
-    
     query_job = client.query(query)
 
     for row in query_job:
@@ -43,6 +47,9 @@ def make_spatial_query(bigquery_project:str = "wrc-wro", bigquery_dataset:str = 
     """
     credentials = '/home/mohab/Main/development/googleAuthKeys/wro project/bigquery admin/wrc-wro-7a61a964dfbd.json'
     client = bigquery.Client.from_service_account_json(credentials)
+    underscore_names = use_name_underscores(bigquery_dataset, bigquery_table)
+    bigquery_dataset = underscore_names.get("bigquery_dataset")
+    bigquery_table = underscore_names.get("bigquery_table")
     geojson_ob_list = []
     query = f"""
         select ST_ASGEOJSON(ST_GEOGPOINT(LAT, LON)) as feature,
@@ -71,6 +78,15 @@ def make_spatial_query(bigquery_project:str = "wrc-wro", bigquery_dataset:str = 
         x2,y2 = transform(inProj,outProj,x1,y1)
         return f'LAT:{x2},LON:{y2}'
 
-
-
     return json.dumps(geojson_ob_list)
+
+def use_name_underscores(bigquery_dataset, bigquery_table):
+    """
+    when data is queried
+    the dataset name should
+    not have spaces, also the
+    table name
+    """
+    bigquery_dataset = bigquery_dataset.replace(" ","_")
+    bigquery_table = bigquery_table.replace(" ","_")
+    return {"bigquery_dataset":bigquery_dataset, "bigquery_table":bigquery_table}
