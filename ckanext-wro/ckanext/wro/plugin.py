@@ -50,7 +50,9 @@ class WroPlugin(plugins.SingletonPlugin):
     def get_helpers(self):
         return {
             "get_bigquery_table_name": helpers.get_bigquery_table_name,
-            "get_package_name":helpers.get_package_name
+            "get_package_name":helpers.get_package_name,
+            "convert_geojson_to_bbox":helpers.convert_geojson_to_bbox,
+            "get_default_bounding_box":helpers.get_default_bounding_box,
         }
 
 

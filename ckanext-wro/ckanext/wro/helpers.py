@@ -3,7 +3,7 @@ import logging
 import typing
 from shapely import geometry
 from ckan.plugins import toolkit
-import xml.dom.minidom as dom
+import json
 
 logger = logging.getLogger(__name__)
 
@@ -37,15 +37,16 @@ def get_default_bounding_box() -> typing.Optional[typing.List[float]]:
     configured_extent = toolkit.config.get(
         "default_spatial_search_extent"
     )
-    parsed_extent = json.loads(configured_extent)
-    return convert_geojson_to_bbox(parsed_extent)
+    #parsed_extent = json.loads(configured_extent)
+    return convert_geojson_to_bbox(configured_extent)
     
 def convert_geojson_to_bbox(
     geojson: typing.Dict,
 ) -> typing.Optional[typing.List[float]]:
     try:
+        geojson = json.loads(geojson)
         coords = geojson["coordinates"][0]
-    except TypeError:
+    except TypeError as e:
         result = None
     else:
         min_lon = min(c[0] for c in coords)
@@ -54,8 +55,6 @@ def convert_geojson_to_bbox(
         max_lat = max(c[1] for c in coords)
         result = [max_lat, min_lon, min_lat, max_lon]
     return result
-
-
 
 def _pad_geospatial_extent(extent: typing.Dict, padding: float) -> typing.Dict:
     geom = geometry.shape(extent)
