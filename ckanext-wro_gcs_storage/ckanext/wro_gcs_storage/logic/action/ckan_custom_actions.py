@@ -39,18 +39,23 @@ def resource_create(original_action,context:dict, data_dict:dict) -> dict:
     data_dict = is_resource_link(data_dict)
     data_dict= is_resource_bigquery_table(data_dict)
     package_id = _get_or_bust(data_dict, 'package_id')
+    access = toolkit.check_access("resource_create", context, data_dict)
     package = toolkit.get_action("package_show")(dict(context, return_type='dict'),{'id': package_id})
+    # handle the bigquery and url cases here
+    if data_dict.get("is_link") is True or data_dict.get("is_bigquery_table") is True:
+        updated_resource = original_action(context, data_dict) if access else None
+        add_view_to_model(context, package, updated_resource)
+        return updated_resource
+
     package_extras = package.get("extras")
     pkg_name = package.get('name')
     resource_cloud_path = ""
     for item in package_extras:
         if item.get("key") == "cloud_path":
             resource_cloud_path = item.get("value")
-    access = toolkit.check_access("resource_create", context, data_dict)
+    
     updated_resource = original_action(context, data_dict) if access else None
     
-
-
     resource_name = data_dict.get("name")    # this name is file name not the name of the resource provided in the form
     name = pathlib.Path(resource_name).stem
     ext = pathlib.Path(resource_name).suffix
@@ -67,12 +72,7 @@ def resource_create(original_action,context:dict, data_dict:dict) -> dict:
             model.repo.commit()
 
     handle_upload(updated_resource)
-    
-    toolkit.get_action('resource_create_default_resource_views')(
-    {'model': context['model'], 'user': context['user'],
-    'ignore_auth': True},
-    {'package': package,
-    'resource': updated_resource})
+    add_view_to_model(context, package, updated_resource)    
     
     return updated_resource
 
@@ -92,6 +92,13 @@ def handle_upload(updated_resource):
 
     upload.upload(updated_resource, uploader.get_max_resource_size())
 
+
+def add_view_to_model(context, package, updated_resource):
+    toolkit.get_action('resource_create_default_resource_views')(
+    {'model': context['model'], 'user': context['user'],
+    'ignore_auth': True},
+    {'package': package,
+    'resource': updated_resource})
 
 @toolkit.chained_action
 def resource_delete(original_action, context:dict, data_dict:dict) -> dict:
